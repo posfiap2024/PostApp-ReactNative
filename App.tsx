@@ -51,7 +51,8 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Criar Postagem" component={CreatePost} />
-        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Login" component={Login} 
+          options={{ headerShown: false }}/>
         <Stack.Screen name="Criar Professor" component={CreateProfessor} />
         <Stack.Screen name="Criar Estudante" component={CreateStudent} />
       </Stack.Navigator>
