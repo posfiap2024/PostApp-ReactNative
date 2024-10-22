@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, StyleSheet,Text, StatusBar, Modal, Pressable,} from "react-native";
+import { View, TextInput, Button, StyleSheet,Text,TouchableOpacity, StatusBar, Modal, Pressable,} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../contexts/AuthContext";
+import { Ionicons } from '@expo/vector-icons'; // Biblioteca de ícones
 
 export default function Login() {
   const [user, setUser] = useState("");
@@ -9,9 +11,13 @@ export default function Login() {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const navigation = useNavigation();
 
-  const handleButtonPress = () => {
-    if (user === "admin" && password === "123456") {
-      //navigation.navigate("screens/Home/index", { userName: user });
+  const { login } = useAuth()
+
+  const handleButtonPress = async () => {
+    const token = await login(user, password);
+    
+    if (token) {
+      navigation.goBack();
     } else {
       setShowErrorModal(true);
     }
@@ -19,9 +25,11 @@ export default function Login() {
 
   return (
     <LinearGradient style={styles.container} colors={["#433878", "#7E60BF"]}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Ionicons name="arrow-back" size={24} color="white" />
+      </TouchableOpacity>
       <View style={styles.modal}>
         <Text style={styles.title}>Post App</Text>
-
         <Text style={styles.label}>Usuário</Text>
         <TextInput
           style={styles.input}
@@ -30,7 +38,6 @@ export default function Login() {
           onChangeText={(inputText) => setUser(inputText)}
           value={user}
         />
-
         <Text style={styles.label}>Senha</Text>
         <TextInput
           style={styles.input}
@@ -40,10 +47,8 @@ export default function Login() {
           onChangeText={(inputText) => setPassword(inputText)}
           value={password}
         />
-
         <Button title="Login" onPress={handleButtonPress} />
       </View>
-
       <Modal
         visible={showErrorModal}
         transparent={true}
@@ -62,7 +67,6 @@ export default function Login() {
           </View>
         </View>
       </Modal>
-
       <StatusBar style="auto" />
     </LinearGradient>
   );
@@ -73,6 +77,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    position: 'relative', // Adicionado para controle absoluto do botão
+  },
+  backButton: {
+    position: 'absolute',
+    top: 20, // Ajuste conforme necessário
+    left: 20, // Ajuste conforme necessário
   },
   modal: {
     backgroundColor: "#FFF",
