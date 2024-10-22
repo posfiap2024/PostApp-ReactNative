@@ -13,6 +13,7 @@ import CreatePost from './screens/CreatePost';
 import Login from './screens/Login';
 import CreateProfessor from './screens/CreateProfessor';
 import CreateStudent from './screens/CreateStudent';
+import { AuthProvider } from './contexts/AuthContext';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -43,6 +44,7 @@ const DrawerNavigator = () => (
 
 export default function App() {
   return (
+    <AuthProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Drawer">
         <Stack.Screen
@@ -57,5 +59,6 @@ export default function App() {
         <Stack.Screen name="Criar Estudante" component={CreateStudent} />
       </Stack.Navigator>
     </NavigationContainer>
+    </AuthProvider>
   );
 }

@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3001';
+const BASE_URL = 'http://192.168.X.X:3001';
 // const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const obterPosts = async () => {
@@ -125,7 +125,6 @@ export const excluirPost = async (id, token, shouldLog = true) => {
     throw error;
   }
 };
-
 
 export const obterPostPorId = async (id) => {
   try {
