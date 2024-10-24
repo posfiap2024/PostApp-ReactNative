@@ -1,4 +1,4 @@
-const BASE_URL = 'http://192.168.X.X:3001';
+const BASE_URL = 'http://192.168.0.169:3001';
 // const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const obterPosts = async () => {
