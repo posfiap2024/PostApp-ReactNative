@@ -37,12 +37,14 @@ export const AuthProvider = ({ children }) => {
   }, [user]);
 
   const login = async (username, password) => {
-    const token = await logarUsuario(username, password);
-    if (token) {
-      const decodedUser = await obterUsuario(token);
-      setToken(token);
+    const _token = await logarUsuario(username, password);
+    if (_token) {
+      const decodedUser = await obterUsuario(_token);
+      setToken(_token);
       setUser(decodedUser);
     }
+    console.log("Auth Context token: ", token);
+    console.log("Auth Context _token: ", _token);
     return token;
   };
 

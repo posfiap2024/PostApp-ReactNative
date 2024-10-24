@@ -44,21 +44,21 @@ const DrawerNavigator = () => (
 
 export default function App() {
   return (
-    <AuthProvider>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Drawer">
-        <Stack.Screen
-          name="Drawer"
-          component={DrawerNavigator}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name="Criar Postagem" component={CreatePost} />
-        <Stack.Screen name="Login" component={Login} 
-          options={{ headerShown: false }}/>
-        <Stack.Screen name="Criar Professor" component={CreateProfessor} />
-        <Stack.Screen name="Criar Estudante" component={CreateStudent} />
-      </Stack.Navigator>
+        <AuthProvider>
+        <Stack.Navigator initialRouteName="Drawer">
+          <Stack.Screen
+            name="Drawer"
+            component={DrawerNavigator}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="Criar Postagem" component={CreatePost} />
+          <Stack.Screen name="Login" component={Login} 
+            options={{ headerShown: false }}/>
+          <Stack.Screen name="Criar Professor" component={CreateProfessor} />
+          <Stack.Screen name="Criar Estudante" component={CreateStudent} />
+        </Stack.Navigator>
+      </AuthProvider>
     </NavigationContainer>
-    </AuthProvider>
   );
 }
