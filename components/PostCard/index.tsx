@@ -3,10 +3,11 @@ import { StyleSheet, Text, View, Pressable } from "react-native";
 type Props = {
   author?: string
   title: string
-  content: string
+  content: string,
+  onPress?: () => void
 }
 
-export function PostCard({ author, title, content }: Props) {
+export function PostCard({ author, title, content, onPress }: Props) {
   return (
     <View style={styles.card}>
       <Pressable
@@ -16,6 +17,7 @@ export function PostCard({ author, title, content }: Props) {
           foreground: true
         }}
         style={styles.press}
+        onPress={onPress}
       >
         <View>
           <Text style={styles.title}>

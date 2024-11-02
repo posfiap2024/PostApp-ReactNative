@@ -1,16 +1,14 @@
 import { Button, View } from "react-native";
-
-import { NavigationProp } from '@react-navigation/native';
-import { useAuth } from "../../contexts/AuthContext";
 import { useEffect } from "react";
+import { DrawerScreenProps } from "@react-navigation/drawer";
+import { RootStackParamList } from "../../App";
+import { useAuth } from "../../contexts/AuthContext";
 
-type Props = {
-    navigation: NavigationProp<any>;
-  };
-  
+type Props = DrawerScreenProps<RootStackParamList, any>;
+
 export default function Admin({ navigation }: Props) {
 
-  const { token, user } = useAuth(); 
+  const { token, user } = useAuth();
 
   useEffect(() => {
     console.log('TOKEN: ', token)
@@ -20,7 +18,7 @@ export default function Admin({ navigation }: Props) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Button
-          onPress={() => navigation.navigate('Criar Postagem')}
+          onPress={() => navigation.navigate('CreatePost')}
           title="Criar post"
         />
       </View>

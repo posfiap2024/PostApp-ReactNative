@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View, SectionList } from "react-native";
-import { NavigationProp } from '@react-navigation/native';
+import { DrawerScreenProps } from "@react-navigation/drawer";
 import { PostCard } from "../../components/PostCard";
 import { useEffect, useMemo, useState } from "react";
 import { obterPosts } from "../../services/api";
+import { RootStackParamList } from "../../App";
 
-type Props = {
-  navigation: NavigationProp<any>;
-};
+type Props = DrawerScreenProps<RootStackParamList, any>;
 
 export default function PostList({ navigation }: Props) {
   const [posts, setPosts] = useState([
@@ -67,12 +66,21 @@ export default function PostList({ navigation }: Props) {
     <SectionList
       sections={sections}
       keyExtractor={item => String(item.id)}
-      renderItem={({ item }) => <PostCard {...item} />}
-      renderSectionHeader={({ section: { title } }) => (
-        <Text style={styles.title}>
-          {title}
-        </Text>
-      )}
+      renderItem={
+        ({ item }) => (
+          <PostCard
+            {...item}
+            onPress={() => navigation.navigate('Post', { id: item.id })}
+          />
+        )
+      }
+      renderSectionHeader={
+        ({ section: { title } }) => (
+          <Text style={styles.title}>
+            {title}
+          </Text>
+        )
+      }
     />
   );
 }
