@@ -7,7 +7,6 @@ import { useAuth } from "../../contexts/AuthContext";
 type Props = DrawerScreenProps<RootStackParamList, any>;
 
 export default function Admin({ navigation }: Props) {
-
   const { token, user } = useAuth();
 
   useEffect(() => {

@@ -140,7 +140,7 @@ export const obterPostPorId = async (id: any) => {
     return await response.json();
   } catch (error) {
     console.error('Erro ao obter post:', error);
-    throw error;
+    return undefined;
   }
 };
 
