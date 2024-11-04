@@ -45,7 +45,7 @@ export default function Admin({ navigation }: Props) {
     <SectionList
       sections={sections}
       keyExtractor={(item) => "" + item.id}
-      renderItem={({ item }) => <AdminPostCard post={item} />}
+      renderItem={({ item }) => <AdminPostCard navigation={navigation} post={item} />}
       renderSectionHeader={({ section: { title } }) => (
         <Text style={styles.title}>{title}</Text>
       )}

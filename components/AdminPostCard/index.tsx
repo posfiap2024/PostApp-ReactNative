@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { NavigationProp } from '@react-navigation/native';
 
 type AdminPostCardProps = {
+  navigation: NavigationProp<any>;
   post: {
     id: string;
     title: string;
@@ -12,7 +14,7 @@ type AdminPostCardProps = {
   };
 };
 
-const AdminPostCard = ({ post }: AdminPostCardProps) => {
+const AdminPostCard = ({ post, navigation }: AdminPostCardProps) => {
   // Limitar a descrição a 150 caracteres
   const shortDescription = post.content.length > 150 ? post.content.substring(0, 150) + '...' : post.content;
 
@@ -25,13 +27,7 @@ const AdminPostCard = ({ post }: AdminPostCardProps) => {
         <Text style={[styles.cardDescription, styles.paddingTop]}>Status: {post.status}</Text>
       </View>
       <View style={styles.cardActions}>
-        <TouchableOpacity style={[styles.iconButton, styles.editButton]}>
-          <Ionicons name="create-outline" size={24} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.iconButton, styles.deleteButton]}>
-          <Ionicons name="trash-outline" size={24} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity 
+      <TouchableOpacity 
           style={[
             styles.iconButton, 
             post.status !== 'draft' ? styles.disabledButton : styles.publishButton
@@ -39,6 +35,17 @@ const AdminPostCard = ({ post }: AdminPostCardProps) => {
           disabled={post.status !== 'draft'}
         >
           <Ionicons name="cloud-upload-outline" size={24} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity
+            onPress={() => navigation.navigate('Editar Postagem')} 
+            style={[styles.iconButton, styles.editButton]}
+        >
+          <Ionicons name="create-outline" size={24} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity 
+            style={[styles.iconButton, styles.deleteButton]}
+        >
+          <Ionicons name="trash-outline" size={24} color="white" />
         </TouchableOpacity>
       </View>
     </View>
