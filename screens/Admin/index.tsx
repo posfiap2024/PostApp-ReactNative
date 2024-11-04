@@ -1,31 +1,64 @@
-import { Button, View } from "react-native";
-import { useEffect } from "react";
-import { DrawerScreenProps } from "@react-navigation/drawer";
-import { RootStackParamList } from "../../App";
+import React, { useEffect, useMemo, useState } from "react";
+import { Text, SectionList, StyleSheet } from "react-native";
 import { useAuth } from "../../contexts/AuthContext";
+import { NavigationProp } from "@react-navigation/native";
+import { obterPostsAdmin } from "../../services/api";
+import AdminPostCard from "../../components/AdminPostCard";
 
 type Props = {
-    navigation: NavigationProp<any>;
+  navigation: NavigationProp<any>;
 };
 
 export default function Admin({ navigation }: Props) {
-  const { token, user } = useAuth();
+  type Post = {
+    id: string;
+    title: string;
+    content: string;
+    author: string;
+    status: string;
+  };
+
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  const { token } = useAuth();
+
+  const sections = useMemo(
+    () => [
+      {
+        title: "Painel Administrativo",
+        data: posts,
+      },
+    ],
+    [posts]
+  );
 
   useEffect(() => {
-    console.log('TOKEN: ', token)
-    console.log('USER: ', user)
+    const carregarPosts = async () => {
+      const postsCarregados = await obterPostsAdmin(token);
+      setPosts(postsCarregados);
+      console.log(postsCarregados);
+    };
+    carregarPosts();
   }, [token]);
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button
-        onPress={() => navigation.navigate('Criar Postagem')}
-        title="Criar post"
-      />
-      <Button
-        onPress={() => navigation.navigate('Editar Postagem')}
-        title="Editar post"
-      />
-    </View>
+    <SectionList
+      sections={sections}
+      keyExtractor={(item) => "" + item.id}
+      renderItem={({ item }) => <AdminPostCard post={item} />}
+      renderSectionHeader={({ section: { title } }) => (
+        <Text style={styles.title}>{title}</Text>
+      )}
+    />
   );
 }
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginHorizontal: 16,
+    marginTop: 16,
+    marginBottom: 8,
+  },
+});
