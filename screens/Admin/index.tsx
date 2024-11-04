@@ -4,7 +4,9 @@ import { DrawerScreenProps } from "@react-navigation/drawer";
 import { RootStackParamList } from "../../App";
 import { useAuth } from "../../contexts/AuthContext";
 
-type Props = DrawerScreenProps<RootStackParamList, any>;
+type Props = {
+    navigation: NavigationProp<any>;
+};
 
 export default function Admin({ navigation }: Props) {
   const { token, user } = useAuth();
@@ -14,12 +16,16 @@ export default function Admin({ navigation }: Props) {
     console.log('USER: ', user)
   }, [token]);
 
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Button
-          onPress={() => navigation.navigate('CreatePost')}
-          title="Criar post"
-        />
-      </View>
-    );
-  }
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button
+        onPress={() => navigation.navigate('Criar Postagem')}
+        title="Criar post"
+      />
+      <Button
+        onPress={() => navigation.navigate('Editar Postagem')}
+        title="Editar post"
+      />
+    </View>
+  );
+}

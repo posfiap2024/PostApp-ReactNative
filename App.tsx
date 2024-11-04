@@ -10,6 +10,7 @@ import Admin from './screens/Admin';
 import Professors from './screens/Professors';
 import Students from './screens/Students';
 import CreatePost from './screens/CreatePost';
+import EditPost from './screens/EditPost';
 import Login from './screens/Login';
 import CreateProfessor from './screens/CreateProfessor';
 import CreateStudent from './screens/CreateStudent';
@@ -62,12 +63,23 @@ export default function App() {
             component={DrawerNavigator}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="CreatePost" component={CreatePost} />
-          <Stack.Screen name="Login" component={Login}
-            options={{ headerShown: false }}/>
-          <Stack.Screen name="CreateProfessor" component={CreateProfessor} />
-          <Stack.Screen name="CreateStudent" component={CreateStudent} />
-          <Stack.Screen name="Post" component={Post} />
+          <Stack.Screen 
+            name="Criar Postagem" 
+            component={CreatePost} 
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="Editar Postagem" 
+            component={EditPost} 
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="Login" 
+            component={Login} 
+            options={{ headerShown: false }} 
+          />
+          <Stack.Screen name="Criar Professor" component={CreateProfessor} />
+          <Stack.Screen name="Criar Estudante" component={CreateStudent} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
