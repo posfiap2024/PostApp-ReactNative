@@ -17,7 +17,12 @@ export default function PostList({ navigation }: Props) {
   const sections = useMemo(() => ([
     {
       title: 'Últimas postagens',
-      data: posts,
+      data: posts.map(post => ({
+        ...post,
+        content: post.content
+          .slice(0, 100)
+          .concat('...'),
+      })),
     }
   ]), [posts])
 

@@ -31,7 +31,7 @@ export function PostCard({ author, title, content, onPress }: Props) {
           }
         </View>
 
-        <Text>
+        <Text style={styles.text}>
           {content}
         </Text>
       </Pressable>
@@ -59,5 +59,8 @@ const styles = StyleSheet.create({
   author: {
     fontSize: 12,
     color: '#666666'
+  },
+  text: {
+    lineHeight: 20
   }
 })
