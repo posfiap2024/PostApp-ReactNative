@@ -63,35 +63,13 @@ export default function App() {
             component={DrawerNavigator}
             options={{ headerShown: false }}
           />
-          <Stack.Screen 
-            name="Criar Postagem" 
-            component={CreatePost} 
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen 
-            name="Editar Postagem" 
-            component={EditPost} 
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen 
-            name="Login" 
-            component={Login} 
-            options={{ headerShown: false }} 
-          />
-          <Stack.Screen name="Criar Estudante" 
-            component={CreateStudent} 
-            options={{ headerShown: false }} 
-          />
-          <Stack.Screen 
-            name="CreateProfessor" 
-            component={CreateProfessor}
-            options={{ headerShown: false }}  
-          />
-          <Stack.Screen 
-            name="EditProfessor" 
-            component={EditProfessor} 
-            options={{ headerShown: false }} 
-          />
+          <Stack.Screen name="CreatePost" component={CreatePost} />
+          {/* <Stack.Screen name="EditPost" component={EditPost} /> */}
+          <Stack.Screen name="Post" component={Post} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="CreateStudent" component={CreateStudent} />
+          <Stack.Screen name="CreateProfessor" component={CreateProfessor} />
+          <Stack.Screen name="EditProfessor" component={EditProfessor} />
         </Stack.Navigator>
       </AuthProvider>
     </NavigationContainer>
