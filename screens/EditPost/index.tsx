@@ -1,28 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation } from "@react-navigation/native";
-import { useAuth } from '../../contexts/AuthContext';
-import { criarPost } from '../../services/api';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { obterPostPorId, atualizarPost } from '../../services/api';
 import { Ionicons } from '@expo/vector-icons';
 
-const CreatePost = () => {
+const EditPost = () => {
+  const route = useRoute();
+  const navigation = useNavigation();
+  const { id } = 'd6790e78-e5a6-42d8-8431-babf4f0e1f73'; //mockado route.params erro
+
   const [titulo, setTitulo] = useState('');
   const [conteudo, setConteudo] = useState('');
-  const { token } = useAuth();
-  const navigation = useNavigation();
 
-  const handleSubmit = async () => {
-    if (token) {
-      const novoPost = await criarPost(token, titulo, conteudo, 'published');
-      if (novoPost) {
-        Alert.alert('Sucesso', 'Post criado com sucesso!');
-        setTitulo('');
-        setConteudo('');
-        navigation.navigate('Home'); 
-      } else {
-        Alert.alert('Erro', 'Erro ao criar post.');
+  useEffect(() => {
+    const fetchPost = async () => {
+      if (id) {
+        const post = await obterPostPorId(id);
+        setTitulo(post.title);
+        setConteudo(post.content);
       }
+    };
+
+    fetchPost();
+  }, [id]);
+
+  const handleUpdatePost = async () => {
+    try {
+      const updatedPost = await atualizarPost(id, { title: titulo, content: conteudo });
+      Alert.alert('Sucesso', 'Post atualizado com sucesso!');
+      console.log('Post atualizado com sucesso:', updatedPost);
+      navigation.goBack();
+    } catch (error) {
+      Alert.alert('Erro', 'Erro ao atualizar post.');
+      console.error('Erro ao atualizar post:', error);
     }
   };
 
@@ -32,13 +43,14 @@ const CreatePost = () => {
         <Ionicons name="arrow-back" size={24} color="white" />
       </TouchableOpacity>
       <View style={styles.modal}>
-        <Text style={styles.title}>Criação de Post</Text>
+        <Text style={styles.title}>Edição de Post</Text>
         <TextInput
           style={styles.input}
           placeholder="Título"
           placeholderTextColor="#888"
           value={titulo}
           onChangeText={setTitulo}
+          autoCapitalize="words"
         />
         <TextInput
           style={[styles.input, styles.textArea]}
@@ -48,8 +60,8 @@ const CreatePost = () => {
           onChangeText={setConteudo}
           multiline
         />
-        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-          <Text style={styles.submitButtonText}>Enviar Post</Text>
+        <TouchableOpacity style={styles.submitButton} onPress={handleUpdatePost}>
+          <Text style={styles.submitButtonText}>Atualizar Post</Text>
         </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
@@ -112,4 +124,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreatePost;
+export default EditPost;

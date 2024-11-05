@@ -10,6 +10,7 @@ import Admin from './screens/Admin';
 import Professors from './screens/Professors';
 import Students from './screens/Students';
 import CreatePost from './screens/CreatePost';
+import EditPost from './screens/EditPost';
 import Login from './screens/Login';
 import CreateProfessor from './screens/CreateProfessor';
 import CreateStudent from './screens/CreateStudent';
