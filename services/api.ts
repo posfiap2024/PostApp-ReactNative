@@ -1,5 +1,150 @@
-const BASE_URL = 'http://192.168.X.X:3001';
+const BASE_URL = 'http://192.168.0.168:3001';
 // const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+
+export const obterUsuarios = async (token: any) => {
+  try {
+    console.log('Obtendo usuários... ');
+    console.log('Token: ', token);
+
+    const response = await fetch(`${BASE_URL}/users`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error('Erro ao obter usuários: ' + response);
+    }
+    
+    const data = await response.json();
+    console.log('Dados: ' + data)
+    console.log('Usuários obtidos com sucesso!', data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const obterUsuarioPorId = async (
+  token: any,
+  id: any
+) => {
+  try {
+    console.log('Obtendo usuário: ', id);
+    const response = await fetch(`${BASE_URL}/users/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro ao obter usuário.');
+    }
+
+    const data = await response.json();
+    console.log('Usuário obtido com sucesso!', data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const atualizarUsuario = async (
+  token: any,
+  title: any,
+  content: any,
+  status: any
+) => {
+  try {
+    console.log('Criando post... ', title);
+    const response = await fetch(`${BASE_URL}/posts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ title, content, status })
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro ao criar o post');
+    }
+
+    const data = await response.json();
+    console.log('Post criado com sucesso!', data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const criarUsuario = async (
+  token: any,
+  title: any,
+  content: any,
+  status: any
+) => {
+  try {
+    console.log('Criando post... ', title);
+    const response = await fetch(`${BASE_URL}/posts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ title, content, status })
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro ao criar o post');
+    }
+
+    const data = await response.json();
+    console.log('Post criado com sucesso!', data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const excluirUsuario = async (
+  token: any,
+  title: any,
+  content: any,
+  status: any
+) => {
+  try {
+    console.log('Criando post... ', title);
+    const response = await fetch(`${BASE_URL}/posts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ title, content, status })
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro ao criar o post');
+    }
+
+    const data = await response.json();
+    console.log('Post criado com sucesso!', data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
 
 export const obterPosts = async () => {
   try {

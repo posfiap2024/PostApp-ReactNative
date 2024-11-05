@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, SectionList } from "react-native";
 import { DrawerScreenProps } from "@react-navigation/drawer";
 import { PostCard } from "../../components/PostCard";
 import { useEffect, useMemo, useState } from "react";
-import { obterPosts, obterUsuarios } from "../../services/api";
+import { obterUsuarios } from "../../services/api";
 import { RootStackParamList } from "../../App";
 import { Loading } from "../../components/Loading";
 import { NotFound } from "../../components/NotFound";
@@ -69,7 +69,7 @@ export default function EditProfessor({ navigation }: Props) {
             ({ item }) => (
             <UserCard
                 {...item}
-                onPress={() => navigation.navigate('User', { id: item.id! })}
+                onPress={() => navigation.navigate('UserPage', { id: item.id! })}
             />
             )
         }

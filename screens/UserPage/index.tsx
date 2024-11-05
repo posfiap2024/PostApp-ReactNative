@@ -8,31 +8,27 @@ import { NotFound } from "../../components/NotFound";
 import { useAuth } from "../../contexts/AuthContext";
 import { User } from "../../types/User";
 
-type Props = NativeStackScreenProps<RootStackParamList, 'User'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Post'>;
 
-export default function User({ route }: Props) {
+export default function UserPage({ route }: Props) {
 
-
-  const { token } = useAuth();
-
-  useEffect(() => {
-    console.log('TOKEN: ', token)
-    console.log('USER: ', user)
-  }, [token]);
+  const { token, _ } = useAuth();
 
   const { id } = route.params;
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<User | undefined>()
 
   useEffect(() => {
-    obterUsuarioPorId(token, id).then(
-      (data) => {
-        if (data) {
-          setUser(data)
+    obterUsuarioPorId(token, id)
+      .then(
+        (data) => {
+          if (data) {
+            setUser(data)
+          }
         }
-      }
-    )
-  })
+      )
+      .finally(() => setLoading(false))
+  }, [])
 
   if (loading) {
     return <Loading />
@@ -78,6 +74,7 @@ const styles = StyleSheet.create({
   },
   body: {
     fontSize: 16,
-    marginTop: 20
+    marginTop: 20,
+    lineHeight: 24
   }
 })
