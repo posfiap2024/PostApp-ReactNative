@@ -27,9 +27,9 @@ export type RootStackParamList = {
 }
 
 const Drawer = createDrawerNavigator();
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
-const CustomAppBar = ({ navigation }) => {
+const CustomAppBar = ({ navigation }: any) => {
   return (
     <Appbar.Header>
       <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
@@ -42,14 +42,14 @@ const CustomAppBar = ({ navigation }) => {
 const DrawerNavigator = () => (
   <Drawer.Navigator
     initialRouteName="Home"
-    screenOptions={({ navigation }) => ({
+    screenOptions={() => ({
       header: (props) => <CustomAppBar {...props} />,
     })}
   >
     <Drawer.Screen name="Home" component={PostList} />
-    <Drawer.Screen name="Visão Administrativa" component={Admin} />
-    <Drawer.Screen name="Professores" component={Professors} />
-    <Drawer.Screen name="Estudantes" component={Students} />
+    <Drawer.Screen name="Admin" component={Admin} />
+    <Drawer.Screen name="Professors" component={Professors} />
+    <Drawer.Screen name="Students" component={Students} />
   </Drawer.Navigator>
 );
 

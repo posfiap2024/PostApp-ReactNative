@@ -1,6 +1,4 @@
-import { User } from "../types/User";
-
-const BASE_URL = 'http://192.168.0.168:3001';
+const BASE_URL = 'http://192.168.X.X:3001';
 // const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const obterPosts = async () => {
@@ -8,7 +6,7 @@ export const obterPosts = async () => {
     const response = await fetch(`${BASE_URL}/posts`)
     const data = await response.json()
 
-    return data.map(post => ({
+    return data.map((post: any) => ({
       id: post.id,
       author: post.user.username,
       title: post.title,
@@ -20,57 +18,6 @@ export const obterPosts = async () => {
   }
 };
 
-export const obterUsuarios = async (token: any) => {
-  try {
-    const response = await fetch(`${BASE_URL}/users/`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-    const data = await response.json()
-
-    console.log('token: ', token)
-    console.log('dados: ', data)
-
-    return data.map((user: any) => ({
-      id: user.id,
-      role: user.role,
-      username: user.username
-    }))
-  } catch (error) {
-    console.log(error)
-    return []
-  }
-};
-
-export const obterUsuarioPorId = async (
-  token: any,
-  id: number,
-) => {
-  try {
-    console.log('Obtendo usuário... ', id);
-    const response = await fetch(`${BASE_URL}/users/id`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error('Erro ao obter usuário: '+ id);
-    }
-
-    const data = await response.json();
-    console.log('Usuário obtido com sucesso!', data);
-    return data;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
-
-
 export const obterPostsAdmin = async (token: any) => {
   try {
     const response = await fetch(`${BASE_URL}/posts/admin`, {
@@ -80,11 +27,11 @@ export const obterPostsAdmin = async (token: any) => {
     })
     const data = await response.json()
 
-    return data.map(post => ({
+    return data.map((post: any) => ({
       id: post.id,
-      autor: post.user.username,
-      titulo: post.title,
-      descricao: post.content,
+      author: post.user.username,
+      title: post.title,
+      content: post.content,
       status: post.status
     }))
   } catch (error) {
@@ -93,13 +40,13 @@ export const obterPostsAdmin = async (token: any) => {
   }
 };
 
-export const searchPost = async (query) => {
+export const searchPost = async (query: any) => {
   try {
     const response = await fetch(`${BASE_URL}/posts/search?q=${query}`);
     const data = await response.json();
 
     console.log('Posts encontrados: ', data);
-    return data.map(post => ({
+    return data.map((post: any) => ({
       id: post.id,
       autor: post.author || '',
       titulo: post.title,
@@ -111,7 +58,12 @@ export const searchPost = async (query) => {
   }
 };
 
-export const criarPost = async (token, title, content, status) => {
+export const criarPost = async (
+  token: any,
+  title: any,
+  content: any,
+  status: any
+) => {
   try {
     console.log('Criando post... ', title);
     const response = await fetch(`${BASE_URL}/posts`, {
@@ -136,7 +88,7 @@ export const criarPost = async (token, title, content, status) => {
   }
 };
 
-export const atualizarPost = async (id, post) => {
+export const atualizarPost = async (id: any, post: any) => {
   try {
     const response = await fetch(`${BASE_URL}/posts/${id}`, {
       method: 'PUT',
@@ -155,7 +107,7 @@ export const atualizarPost = async (id, post) => {
   }
 };
 
-export const excluirPost = async (id, token, shouldLog = true) => {
+export const excluirPost = async (id: any, token: any, shouldLog = true) => {
   try {
     const response = await fetch(`${BASE_URL}/posts/${id}`, {
       method: 'DELETE',
@@ -163,7 +115,7 @@ export const excluirPost = async (id, token, shouldLog = true) => {
         'Authorization': `Bearer ${token}`
       }
     });
-    
+
     if (!response.ok) {
       throw new Error('Falha ao excluir post');
     }
@@ -179,7 +131,7 @@ export const excluirPost = async (id, token, shouldLog = true) => {
   }
 };
 
-export const obterPostPorId = async (id) => {
+export const obterPostPorId = async (id: any) => {
   try {
     const response = await fetch(`${BASE_URL}/posts/${id}`);
     if (!response.ok) {
@@ -188,10 +140,9 @@ export const obterPostPorId = async (id) => {
     return await response.json();
   } catch (error) {
     console.error('Erro ao obter post:', error);
-    throw error;
+    return undefined;
   }
 };
-
 
 export const logarUsuario = async (username: any, password: any) => {
   try {
@@ -217,7 +168,7 @@ export const logarUsuario = async (username: any, password: any) => {
   }
 };
 
-export const obterUsuario = async (token) => {
+export const obterUsuario = async (token: any) => {
   try {
     const response = await fetch(`${BASE_URL}/auth/user`, {
       headers: {

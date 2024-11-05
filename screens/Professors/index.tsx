@@ -4,9 +4,7 @@ import { RootStackParamList } from "../../App";
 import { useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 
-type Props = {
-  navigation: NavigationProp<any>;
-};
+type Props = DrawerScreenProps<RootStackParamList, any>;
 
 export default function Professors({ navigation }: Props) {
 
@@ -20,7 +18,7 @@ export default function Professors({ navigation }: Props) {
     return (
       <View style={{ flex: 1, alignItems: 'center',  justifyContent: 'center' }}>
         <Button
-          onPress={() => navigation.navigate('Criar Professor')}
+          onPress={() => navigation.navigate('CreateProfessor')}
           title="Criar professor"
         />
 
