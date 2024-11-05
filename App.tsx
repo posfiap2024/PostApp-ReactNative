@@ -14,6 +14,17 @@ import Login from './screens/Login';
 import CreateProfessor from './screens/CreateProfessor';
 import CreateStudent from './screens/CreateStudent';
 import { AuthProvider } from './contexts/AuthContext';
+import Post from './screens/Post';
+import EditProfessor from './screens/EditProfessor';
+
+export type RootStackParamList = {
+  Drawer: undefined;
+  Login: undefined;
+  CreatePost: undefined;
+  CreateProfessor: undefined;
+  CreateStudent: undefined;
+  Post: { id: number };
+}
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -52,11 +63,35 @@ export default function App() {
             component={DrawerNavigator}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="Criar Postagem" component={CreatePost} />
-          <Stack.Screen name="Login" component={Login} 
-            options={{ headerShown: false }}/>
-          <Stack.Screen name="Criar Professor" component={CreateProfessor} />
-          <Stack.Screen name="Criar Estudante" component={CreateStudent} />
+          <Stack.Screen 
+            name="Criar Postagem" 
+            component={CreatePost} 
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="Editar Postagem" 
+            component={EditPost} 
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="Login" 
+            component={Login} 
+            options={{ headerShown: false }} 
+          />
+          <Stack.Screen name="Criar Estudante" 
+            component={CreateStudent} 
+            options={{ headerShown: false }} 
+          />
+          <Stack.Screen 
+            name="CreateProfessor" 
+            component={CreateProfessor}
+            options={{ headerShown: false }}  
+          />
+          <Stack.Screen 
+            name="EditProfessor" 
+            component={EditProfessor} 
+            options={{ headerShown: false }} 
+          />
         </Stack.Navigator>
       </AuthProvider>
     </NavigationContainer>

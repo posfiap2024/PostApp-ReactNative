@@ -1,4 +1,6 @@
-const BASE_URL = 'http://192.168.0.141:3001';
+import { User } from "../types/User";
+
+const BASE_URL = 'http://192.168.0.168:3001';
 // const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const obterPosts = async () => {
@@ -8,9 +10,9 @@ export const obterPosts = async () => {
 
     return data.map(post => ({
       id: post.id,
-      autor: post.user.username,
-      titulo: post.title,
-      descricao: post.content
+      author: post.user.username,
+      title: post.title,
+      content: post.content
     }))
   } catch (error) {
     console.log(error)
@@ -18,7 +20,58 @@ export const obterPosts = async () => {
   }
 };
 
-export const obterPostsAdmin = async (token) => {
+export const obterUsuarios = async (token: any) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    const data = await response.json()
+
+    console.log('token: ', token)
+    console.log('dados: ', data)
+
+    return data.map((user: any) => ({
+      id: user.id,
+      role: user.role,
+      username: user.username
+    }))
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+};
+
+export const obterUsuarioPorId = async (
+  token: any,
+  id: number,
+) => {
+  try {
+    console.log('Obtendo usuário... ', id);
+    const response = await fetch(`${BASE_URL}/users/id`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro ao obter usuário: '+ id);
+    }
+
+    const data = await response.json();
+    console.log('Usuário obtido com sucesso!', data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+
+export const obterPostsAdmin = async (token: any) => {
   try {
     const response = await fetch(`${BASE_URL}/posts/admin`, {
       headers: {
@@ -139,7 +192,8 @@ export const obterPostPorId = async (id) => {
   }
 };
 
-export const logarUsuario = async (username, password) => {
+
+export const logarUsuario = async (username: any, password: any) => {
   try {
     console.log('Fazendo login... ', username);
     const response = await fetch(`${BASE_URL}/auth/login`, {
