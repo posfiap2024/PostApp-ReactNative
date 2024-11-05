@@ -88,27 +88,28 @@ export const atualizarUsuario = async (
 
 export const criarUsuario = async (
   token: any,
-  title: any,
-  content: any,
-  status: any
+  role: any,
+  username: any,
+  password: any,
 ) => {
   try {
-    console.log('Criando post... ', title);
-    const response = await fetch(`${BASE_URL}/posts`, {
+    console.log('Criando usuário... ', username);
+    const response = await fetch(`${BASE_URL}/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({ title, content, status })
+      body: JSON.stringify({ role, username, password })
     });
 
     if (!response.ok) {
-      throw new Error('Erro ao criar o post');
+      console.log('response: ', JSON.stringify({ username, password, role }));
+      throw new Error('Erro ao criar usuário.');
     }
 
     const data = await response.json();
-    console.log('Post criado com sucesso!', data);
+    console.log('Usuário criado com sucesso!', data);
     return data;
   } catch (error) {
     console.log(error);

@@ -25,8 +25,8 @@ export default function Professors({ navigation }: Props) {
         />
 
       <Button
-          onPress={() => navigation.navigate('EditProfessor')}
-          title="Editar professor"
+          onPress={() => navigation.navigate('Lista de Professores')}
+          title="Lista de Professores"
         />
       </View>
     );

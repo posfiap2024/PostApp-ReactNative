@@ -16,7 +16,7 @@ import CreateProfessor from './screens/CreateProfessor';
 import CreateStudent from './screens/CreateStudent';
 import { AuthProvider } from './contexts/AuthContext';
 import Post from './screens/Post';
-import EditProfessor from './screens/EditProfessor';
+import ProfessorList from './screens/EditProfessor';
 import UserPage from './screens/UserPage';
 
 export type RootStackParamList = {
@@ -66,12 +66,13 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="Post" component={Post} />
-          <Stack.Screen name="CreatePost" component={CreatePost} />
+          <Stack.Screen name="Criar Postagem" component={CreatePost} />
+          <Stack.Screen name="Editar Postagem" component={EditPost} />
           <Stack.Screen name="Login" component={Login}/>
-          <Stack.Screen name="CreateStudent" component={CreateStudent} />
-          <Stack.Screen name="CreateProfessor" component={CreateProfessor} />
-          <Stack.Screen name="EditProfessor" component={EditProfessor} />
-          <Stack.Screen name="UserPage" component={UserPage} />
+          <Stack.Screen name="Criar Estudante" component={CreateStudent} />
+          <Stack.Screen name="Criar Professor" component={CreateProfessor} />
+          <Stack.Screen name="Lista de Professores" component={ProfessorList} />
+          <Stack.Screen name="Usuário" component={UserPage} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

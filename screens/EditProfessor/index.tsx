@@ -15,7 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 type Props = DrawerScreenProps<RootStackParamList, any>;
 
-export default function EditProfessor({ navigation }: Props) {
+export default function ProfessorList({ navigation }: Props) {
 
     const { token, user } = useAuth();
 
@@ -69,7 +69,7 @@ export default function EditProfessor({ navigation }: Props) {
             ({ item }) => (
             <UserCard
                 {...item}
-                onPress={() => navigation.navigate('UserPage', { id: item.id! })}
+                onPress={() => navigation.navigate('Usuário', { id: item.id! })}
             />
             )
         }
