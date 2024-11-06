@@ -88,19 +88,24 @@ export const criarPost = async (
   }
 };
 
-export const atualizarPost = async (id: any, post: any) => {
+export const atualizarPost = async (token: string, id: string, post: any) => {
   try {
     const response = await fetch(`${BASE_URL}/posts/${id}`, {
-      method: 'PUT',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(post),
     });
+
     if (!response.ok) {
       throw new Error('Falha ao atualizar post');
     }
-    return await response.json();
+
+    //const data = await response.json();
+    console.log('Post atualizado com sucesso!');
+    return true;
   } catch (error) {
     console.error('Erro ao atualizar post:', error);
     throw error;

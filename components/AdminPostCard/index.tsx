@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationProp } from '@react-navigation/native';
+import { useAuth } from '../../contexts/AuthContext';
+import { atualizarPost } from '../../services/api';
 
 type AdminPostCardProps = {
   navigation: NavigationProp<any>;
@@ -12,11 +14,28 @@ type AdminPostCardProps = {
     author: string;
     status: string;
   };
+  carregarPosts: () => void;
 };
 
-const AdminPostCard = ({ post, navigation }: AdminPostCardProps) => {
+const AdminPostCard = ({ post, navigation, carregarPosts }: AdminPostCardProps) => {
   // Limitar a descrição a 150 caracteres
   const shortDescription = post.content.length > 150 ? post.content.substring(0, 150) + '...' : post.content;
+
+  const {token} = useAuth();
+
+  const handlePublishPost = async () => {
+    try {
+      const atualizaPost = await atualizarPost(token, post.id, { "status": "published" });
+
+      console.log(atualizaPost);
+
+      if (atualizaPost) {
+        carregarPosts();
+      }
+    } catch (error) {
+      console.error('Erro ao publicar o post:', error);
+    }
+  }
 
   return (
     <View style={styles.card}>
@@ -33,6 +52,7 @@ const AdminPostCard = ({ post, navigation }: AdminPostCardProps) => {
             post.status !== 'draft' ? styles.disabledButton : styles.publishButton
           ]}
           disabled={post.status !== 'draft'}
+          onPress={handlePublishPost} 
         >
           <Ionicons name="cloud-upload-outline" size={24} color="white" />
         </TouchableOpacity>
