@@ -1,9 +1,9 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationProp } from '@react-navigation/native';
 import { useAuth } from '../../contexts/AuthContext';
-import { atualizarPost } from '../../services/api';
+import { atualizarPost, excluirPost } from '../../services/api';
 
 type AdminPostCardProps = {
   navigation: NavigationProp<any>;
@@ -21,7 +21,8 @@ const AdminPostCard = ({ post, navigation, carregarPosts }: AdminPostCardProps) 
   // Limitar a descrição a 150 caracteres
   const shortDescription = post.content.length > 150 ? post.content.substring(0, 150) + '...' : post.content;
 
-  const {token} = useAuth();
+  const { token } = useAuth();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handlePublishPost = async () => {
     try {
@@ -35,7 +36,21 @@ const AdminPostCard = ({ post, navigation, carregarPosts }: AdminPostCardProps) 
     } catch (error) {
       console.error('Erro ao publicar o post:', error);
     }
-  }
+  };
+
+  const handleDeletePost = async () => {
+    try {
+      const postExcluido = await excluirPost(post.id, token);
+
+      if (postExcluido) {
+        carregarPosts();
+      }
+
+      setModalVisible(false);
+    } catch (error) {
+      console.error('Erro ao excluir o post:', error);
+    }
+  };
 
   return (
     <View style={styles.card}>
@@ -46,7 +61,7 @@ const AdminPostCard = ({ post, navigation, carregarPosts }: AdminPostCardProps) 
         <Text style={[styles.cardDescription, styles.paddingTop]}>Status: {post.status}</Text>
       </View>
       <View style={styles.cardActions}>
-      <TouchableOpacity 
+        <TouchableOpacity 
           style={[
             styles.iconButton, 
             post.status !== 'draft' ? styles.disabledButton : styles.publishButton
@@ -57,17 +72,47 @@ const AdminPostCard = ({ post, navigation, carregarPosts }: AdminPostCardProps) 
           <Ionicons name="cloud-upload-outline" size={24} color="white" />
         </TouchableOpacity>
         <TouchableOpacity
-            onPress={() => navigation.navigate('Editar Postagem')} 
-            style={[styles.iconButton, styles.editButton]}
+          onPress={() => navigation.navigate('Editar Postagem')} 
+          style={[styles.iconButton, styles.editButton]}
         >
           <Ionicons name="create-outline" size={24} color="white" />
         </TouchableOpacity>
         <TouchableOpacity 
-            style={[styles.iconButton, styles.deleteButton]}
+          onPress={() => setModalVisible(true)} 
+          style={[styles.iconButton, styles.deleteButton]}
         >
           <Ionicons name="trash-outline" size={24} color="white" />
         </TouchableOpacity>
       </View>
+
+
+      <Modal
+        transparent={true}
+        animationType="fade"
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Confirmar Exclusão</Text>
+            <Text style={styles.modalMessage}>Você tem certeza que deseja excluir este post?</Text>
+            <View style={styles.modalActions}>
+              <Pressable
+                style={[styles.button, styles.buttonCancel]}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.buttonText}>Cancelar</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.button, styles.buttonConfirm]}
+                onPress={handleDeletePost}
+              >
+                <Text style={styles.buttonText}>Confirmar</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -121,6 +166,49 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     backgroundColor: '#B0B0B0', // Cinza para desabilitado
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#FFF',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  modalMessage: {
+    fontSize: 16,
+    marginBottom: 16,
+  },
+  modalActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  button: {
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    width: '45%',
+  },
+  buttonCancel: {
+    backgroundColor: '#B0B0B0', // Cinza para cancelar
+  },
+  buttonConfirm: {
+    backgroundColor: '#F44336', // Vermelho para confirmar
+  },
+  buttonText: {
+    color: '#FFF',
+    fontWeight: 'bold',
   },
 });
 
