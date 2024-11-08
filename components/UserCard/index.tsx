@@ -1,13 +1,12 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 
 type Props = {
-  author?: string
-  title: string
-  content: string,
+  username: string
+  role: string,
   onPress?: () => void
 }
 
-export function PostCard({ author, title, content, onPress }: Props) {
+export function UserCard({ username, role, onPress }: Props) {
   return (
     <View style={styles.card}>
       <Pressable
@@ -19,7 +18,7 @@ export function PostCard({ author, title, content, onPress }: Props) {
         style={styles.press}
         onPress={onPress}
       >
-        <View>
+        {/* <View>
           <Text style={styles.title}>
             {title}
           </Text>
@@ -29,10 +28,12 @@ export function PostCard({ author, title, content, onPress }: Props) {
               {author}
             </Text>
           }
-        </View>
-
-        <Text style={styles.text}>
-          {content}
+        </View> */}
+        <Text>
+          Nome: {username}
+        </Text>
+        <Text>
+          Função: {role}
         </Text>
       </Pressable>
     </View>
@@ -59,8 +60,5 @@ const styles = StyleSheet.create({
   author: {
     fontSize: 12,
     color: '#666666'
-  },
-  text: {
-    lineHeight: 20
   }
 })
