@@ -16,6 +16,8 @@ import CreateProfessor from './screens/CreateProfessor';
 import CreateStudent from './screens/CreateStudent';
 import { AuthProvider } from './contexts/AuthContext';
 import Post from './screens/Post';
+import ProfessorList from './screens/EditProfessor';
+import UserPage from './screens/UserPage';
 
 export type RootStackParamList = {
   Drawer: undefined;
@@ -33,7 +35,7 @@ const CustomAppBar = ({ navigation }: any) => {
   return (
     <Appbar.Header>
       <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
-      <Appbar.Content title="PostApp" />
+      <Appbar.Content title="Aplicativo de Postagens Escolares" />
       <Appbar.Action icon="login" onPress={() => navigation.navigate('Login')} />
     </Appbar.Header>
   );
@@ -47,9 +49,9 @@ const DrawerNavigator = () => (
     })}
   >
     <Drawer.Screen name="Home" component={PostList} />
-    <Drawer.Screen name="Admin" component={Admin} />
-    <Drawer.Screen name="Professors" component={Professors} />
-    <Drawer.Screen name="Students" component={Students} />
+    <Drawer.Screen name="Visão Administrativa" component={Admin} />
+    <Drawer.Screen name="Professores" component={Professors} />
+    <Drawer.Screen name="Estudantes" component={Students} />
   </Drawer.Navigator>
 );
 
@@ -63,23 +65,14 @@ export default function App() {
             component={DrawerNavigator}
             options={{ headerShown: false }}
           />
-          <Stack.Screen 
-            name="Criar Postagem" 
-            component={CreatePost} 
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen 
-            name="Editar Postagem" 
-            component={EditPost} 
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen 
-            name="Login" 
-            component={Login} 
-            options={{ headerShown: false }} 
-          />
-          <Stack.Screen name="Criar Professor" component={CreateProfessor} />
+          <Stack.Screen name="Post" component={Post} />
+          <Stack.Screen name="Criar Postagem" component={CreatePost} />
+          <Stack.Screen name="Editar Postagem" component={EditPost} />
+          <Stack.Screen name="Login" component={Login}/>
           <Stack.Screen name="Criar Estudante" component={CreateStudent} />
+          <Stack.Screen name="Criar Professor" component={CreateProfessor} />
+          <Stack.Screen name="Lista de Professores" component={ProfessorList} />
+          <Stack.Screen name="Usuário" component={UserPage} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
