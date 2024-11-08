@@ -14,12 +14,12 @@ const CreatePost = () => {
 
   const handleSubmit = async () => {
     if (token) {
-      const novoPost = await criarPost(token, titulo, conteudo, 'published');
+      const novoPost = await criarPost(token, titulo, conteudo, 'draft');
       if (novoPost) {
         Alert.alert('Sucesso', 'Post criado com sucesso!');
         setTitulo('');
         setConteudo('');
-        navigation.navigate('Home'); 
+        navigation.navigate('Admin'); 
       } else {
         Alert.alert('Erro', 'Erro ao criar post.');
       }

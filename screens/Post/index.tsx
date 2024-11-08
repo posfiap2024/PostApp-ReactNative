@@ -15,14 +15,16 @@ export default function Post({ route }: Props) {
   const [post, setPost] = useState<Post | undefined>()
 
   useEffect(() => {
-    obterPostPorId(id).then(
-      (data) => {
-        if (data) {
-          setPost(data)
+    obterPostPorId(id)
+      .then(
+        (data) => {
+          if (data) {
+            setPost(data)
+          }
         }
-      }
-    )
-  })
+      )
+      .finally(() => setLoading(false))
+  }, [])
 
   if (loading) {
     return <Loading />
@@ -68,6 +70,7 @@ const styles = StyleSheet.create({
   },
   body: {
     fontSize: 16,
-    marginTop: 20
+    marginTop: 20,
+    lineHeight: 24
   }
 })
