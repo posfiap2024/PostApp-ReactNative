@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Text, SectionList, StyleSheet, ActivityIndicator, View } from "react-native";
+import { Text, SectionList, StyleSheet, ActivityIndicator, View, TouchableOpacity } from "react-native";
 import { useAuth } from "../../contexts/AuthContext";
 import { NavigationProp } from "@react-navigation/native";
+import { Ionicons } from '@expo/vector-icons'; // Importe os ícones
 import { obterPostsAdmin } from "../../services/api";
 import AdminPostCard from "../../components/AdminPostCard";
 
@@ -51,16 +52,25 @@ export default function Admin({ navigation }: Props) {
       </View> 
     );
   }
-  
+
   return (
-    <SectionList
-      sections={sections}
-      keyExtractor={(item) => "" + item.id}
-      renderItem={({ item }) => <AdminPostCard carregarPosts={carregarPosts} navigation={navigation} post={item} />}
-      renderSectionHeader={({ section: { title } }) => (
-        <Text style={styles.title}>{title}</Text>
-      )}
-    />
+    <View style={{ flex: 1 }}>
+      <SectionList
+        sections={sections}
+        keyExtractor={(item) => "" + item.id}
+        renderItem={({ item }) => <AdminPostCard carregarPosts={carregarPosts} navigation={navigation} post={item} />}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text style={styles.title}>{title}</Text>
+        )}
+      />
+      <TouchableOpacity
+        style={styles.fab}
+        onPress={() => navigation.navigate('Criar Postagem')}
+      >
+        <Ionicons name="add" size={24} color="white" />
+        <Text style={styles.fabText}>Criar Post</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -76,5 +86,23 @@ const styles = StyleSheet.create({
     flex: 1, 
     justifyContent: "center", 
     alignItems: "center", 
+  },
+  fab: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 16,
+    bottom: 16,
+    backgroundColor: '#007bff',
+    borderRadius: 30,
+    padding: 16,
+    elevation: 5,
+  },
+  fabText: {
+    color: 'white',
+    marginLeft: 8,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
