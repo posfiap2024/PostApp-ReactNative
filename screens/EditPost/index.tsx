@@ -4,39 +4,48 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { obterPostPorId, atualizarPost } from '../../services/api';
 import { Ionicons } from '@expo/vector-icons';
+import { useAuth } from '../../contexts/AuthContext';
 
 const EditPost = () => {
-  const route = useRoute();
   const navigation = useNavigation();
-  const { id } = 'd6790e78-e5a6-42d8-8431-babf4f0e1f73'; //mockado route.params erro
+  const route = useRoute();
+  const { id } = route.params;
+  const { token } = useAuth();
 
   const [titulo, setTitulo] = useState('');
   const [conteudo, setConteudo] = useState('');
+  const [status, setStatus] = useState('');
 
   useEffect(() => {
-    const fetchPost = async () => {
-      if (id) {
-        const post = await obterPostPorId(id);
+    const carregarDadosDoPost = async () => {
+      try {
+        const post = await obterPostPorId(id, token);
         setTitulo(post.title);
         setConteudo(post.content);
+        setStatus(post.status);
+      } catch (error) {
+        console.error('Erro ao carregar dados do post:', error);
       }
     };
 
-    fetchPost();
-  }, [id]);
+    carregarDadosDoPost();
+  }, [id, token]);
 
   const handleUpdatePost = async () => {
-    try {
-      const updatedPost = await atualizarPost(id, { title: titulo, content: conteudo });
-      Alert.alert('Sucesso', 'Post atualizado com sucesso!');
-      console.log('Post atualizado com sucesso:', updatedPost);
+    const sucesso = await atualizarPost(token, id, {
+      title: titulo,
+      content: conteudo,
+      status,
+    });
+  
+    if (sucesso) {
+      Alert.alert("Sucesso", "Post atualizado com sucesso!");
       navigation.goBack();
-    } catch (error) {
-      Alert.alert('Erro', 'Erro ao atualizar post.');
-      console.error('Erro ao atualizar post:', error);
+    } else {
+      Alert.alert("Erro", "Falha ao atualizar o post. Verifique os detalhes e tente novamente.");
     }
   };
-
+  
   return (
     <LinearGradient style={styles.container} colors={["#433878", "#7E60BF"]}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>

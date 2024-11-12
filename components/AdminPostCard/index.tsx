@@ -72,7 +72,7 @@ const AdminPostCard = ({ post, navigation, carregarPosts }: AdminPostCardProps) 
           <Ionicons name="cloud-upload-outline" size={24} color="white" />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Editar Postagem')} 
+          onPress={() => navigation.navigate('Editar Postagem', { id: post.id })}
           style={[styles.iconButton, styles.editButton]}
         >
           <Ionicons name="create-outline" size={24} color="white" />
