@@ -156,7 +156,8 @@ export const obterPosts = async () => {
       id: post.id,
       author: post.user.username,
       title: post.title,
-      content: post.content
+      content: post.content,
+      status: post.status
     }))
   } catch (error) {
     console.log(error)
@@ -244,19 +245,29 @@ export const atualizarPost = async (token: string, id: string, post: any) => {
       },
       body: JSON.stringify(post),
     });
-
     if (!response.ok) {
-      throw new Error('Falha ao atualizar post');
+      console.error('Falha na resposta da API:', response.status, response.statusText);
+      return false;
     }
-
-    //const data = await response.json();
-    console.log('Post atualizado com sucesso!');
+    const responseText = await response.text();
+    if (responseText) {
+      try {
+        const data = JSON.parse(responseText);
+        console.log('Post atualizado com sucesso!', data);
+      } catch (jsonError) {
+        console.warn('Erro ao analisar JSON:', jsonError);
+      }
+    } else {
+      console.log('Post atualizado com sucesso! (sem corpo na resposta)');
+    }
     return true;
   } catch (error) {
     console.error('Erro ao atualizar post:', error);
-    throw error;
+    return false;
   }
 };
+
+
 
 export const excluirPost = async (id: any, token: any, shouldLog = true) => {
   try {
