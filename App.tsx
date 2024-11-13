@@ -14,10 +14,11 @@ import EditPost from './screens/EditPost';
 import Login from './screens/Login';
 import CreateProfessor from './screens/CreateProfessor';
 import CreateStudent from './screens/CreateStudent';
-import { AuthProvider } from './contexts/AuthContext';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Post from './screens/Post';
 import ProfessorList from './screens/EditProfessor';
 import UserPage from './screens/UserPage';
+import { useEffect, useState } from 'react';
 
 export type RootStackParamList = {
   Drawer: undefined;
@@ -40,7 +41,24 @@ const CustomAppBar = ({ navigation }: any) => {
   </Appbar.Header> ); 
 };
 
-const DrawerNavigator = () => (
+const DrawerNavigator = () => {  
+  const { user } = useAuth();
+  const [usuarioAdmin, setUsuarioAdmin] = useState(false);
+  const [usuarioProfessor, setUsuarioProfessor] = useState(false);
+  
+  useEffect(() => {
+    if (user?.role === 'admin') {
+      setUsuarioAdmin(true)
+    } else if (user?.role === 'professor'){
+      setUsuarioProfessor(true)
+    } else {
+      setUsuarioAdmin(false)
+      setUsuarioProfessor(false)
+    }
+    console.log('Usuário:',user);
+  }, [user]);
+
+  return (
   <Drawer.Navigator
     initialRouteName="Home"
     screenOptions={() => ({
@@ -48,11 +66,24 @@ const DrawerNavigator = () => (
     })}
   >
     <Drawer.Screen name="Home" component={PostList} />
-    <Drawer.Screen name="Visão Administrativa" component={Admin} />
-    <Drawer.Screen name="Professores" component={Professors} />
-    <Drawer.Screen name="Estudantes" component={Students} />
+
+    {usuarioProfessor && ( 
+      <>  
+        <Drawer.Screen name="Visão Administrativa" component={Admin} /> 
+      </>
+    )}
+
+    {usuarioAdmin && ( 
+      <>  
+        <Drawer.Screen name="Visão Administrativa" component={Admin} /> 
+        <Drawer.Screen name="Professores" component={Professors} />
+        <Drawer.Screen name="Estudantes" component={Students} />
+      </>
+    )}
+    
+    
   </Drawer.Navigator>
-);
+)};
 
 export default function App() {
   return (

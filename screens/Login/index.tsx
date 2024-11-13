@@ -52,7 +52,9 @@ export default function Login() {
           onChangeText={(inputText) => setPassword(inputText)}
           value={password}
         />
-        <Button title="Login" onPress={handleButtonPress} />
+        <TouchableOpacity style={styles.submitButton} onPress={handleButtonPress}>
+          <Text style={styles.submitButtonText}>Login</Text>
+        </TouchableOpacity>
       </View>
       <Modal
         visible={showErrorModal}
@@ -147,5 +149,17 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: "#FFF",
     fontWeight: "bold",
+  },
+  submitButton: {
+    backgroundColor: "#433878",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  submitButtonText: {
+    color: "#FFF",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });
