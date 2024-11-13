@@ -7,7 +7,7 @@ import { criarPost, criarUsuario } from '../../services/api';
 import { Ionicons } from '@expo/vector-icons';
 
 const CreateStudent = () => {
-  const role = 'aluno';
+  const role = 'student';
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');

@@ -30,7 +30,7 @@ export default function StudentList({ navigation }: Props) {
 
   const sections = useMemo(() => ([
     {
-      title: 'Usuários',
+      title: 'Alunos',
       data: users,
     }
   ]), [users])
