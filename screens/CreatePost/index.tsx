@@ -19,7 +19,7 @@ const CreatePost = () => {
         Alert.alert('Sucesso', 'Post criado com sucesso!');
         setTitulo('');
         setConteudo('');
-        navigation.navigate('Admin'); 
+        navigation.goBack();
       } else {
         Alert.alert('Erro', 'Erro ao criar post.');
       }

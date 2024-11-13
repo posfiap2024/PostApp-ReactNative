@@ -58,7 +58,7 @@ const AdminPostCard = ({ post, navigation, carregarPosts }: AdminPostCardProps) 
         <Text style={styles.cardTitle}>{post.title}</Text>
         <Text style={styles.cardDescription}>{shortDescription}</Text>
 
-        <Text style={[styles.cardDescription, styles.paddingTop]}>Status: {post.status}</Text>
+        <Text style={[styles.cardDescription, styles.paddingTop, styles.negrito]}>Status: {post.status}</Text>
       </View>
       <View style={styles.cardActions}>
         <TouchableOpacity 
@@ -118,6 +118,9 @@ const AdminPostCard = ({ post, navigation, carregarPosts }: AdminPostCardProps) 
 };
 
 const styles = StyleSheet.create({
+  negrito:{
+    fontWeight: 'bold',
+  },
   paddingTop: {
     paddingTop: 8,
   },
@@ -152,17 +155,17 @@ const styles = StyleSheet.create({
   iconButton: {
     alignItems: 'center',
     padding: 8,
-    width: 70,
+    width: 80,
     borderRadius: 16,
   },
   editButton: {
-    backgroundColor: '#008CBA', // Azul para editar
+    backgroundColor: '#433878', // Roxo para editar
   },
   deleteButton: {
-    backgroundColor: '#F44336', // Vermelho para excluir
+    backgroundColor: '#FB4D3D', // Vermelho para excluir
   },
   publishButton: {    
-    backgroundColor: '#4CAF50', // Verde para publicar
+    backgroundColor: '#E68346', // laranja para publicar
   },
   disabledButton: {
     backgroundColor: '#B0B0B0', // Cinza para desabilitado
