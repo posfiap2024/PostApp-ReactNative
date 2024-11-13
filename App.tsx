@@ -16,8 +16,6 @@ import CreateProfessor from './screens/CreateProfessor';
 import CreateStudent from './screens/CreateStudent';
 import { AuthProvider } from './contexts/AuthContext';
 import Post from './screens/Post';
-import ProfessorList from './screens/EditProfessor';
-import UserPage from './screens/UserPage';
 
 export type RootStackParamList = {
   Drawer: undefined;
@@ -70,8 +68,7 @@ export default function App() {
           <Stack.Screen name="Login" component={Login}  options={{ headerShown: false }}/>
           <Stack.Screen name="Criar Estudante" component={CreateStudent} />
           <Stack.Screen name="Criar Professor" component={CreateProfessor} />
-          <Stack.Screen name="Lista de Professores" component={ProfessorList} />
-          <Stack.Screen name="Usuário" component={UserPage} />
+          <Stack.Screen name="Lista de Professores" component={Professors} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
