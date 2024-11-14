@@ -3,11 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable } from 'reac
 import { Ionicons } from '@expo/vector-icons';
 
 type UserCardProps = {
-  id: string;
+  id: number;
   username: string;
   role: string;
-  onEdit: (id: string) => void;
-  onDelete: (id: string) => void;
+  onEdit: (id:  number) => void;
+  onDelete: (id: number) => void;
 };
 
 export function UserCard({ id, username, role, onEdit, onDelete }: UserCardProps) {

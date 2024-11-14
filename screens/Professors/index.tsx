@@ -1,19 +1,22 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { StyleSheet, Text, View, SectionList, ActivityIndicator, TouchableOpacity, RefreshControl } from "react-native";
+import { StyleSheet, Text, View, SectionList, RefreshControl, TouchableOpacity } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-import { DrawerScreenProps } from "@react-navigation/drawer";
+import { NavigationProp, useFocusEffect } from "@react-navigation/native";
 import { useAuth } from "../../contexts/AuthContext";
-import { obterUsuarios } from "../../services/api";
-import { RootStackParamList } from "../../App";
+import { excluirUsuario, obterUsuariosPorFuncao } from "../../services/api";
 import { UserCard } from "../../components/UserCard";
 import { Loading } from "../../components/Loading";
 import { NotFound } from "../../components/NotFound";
 import { Ionicons } from '@expo/vector-icons';
 import { User } from "../../types/User";
 
-type Props = DrawerScreenProps<RootStackParamList, "Professors">;
+type Props = {
+  navigation: NavigationProp<any>;
+};
 
 export default function Professors({ navigation }: Props) {
+
+  
   const { token } = useAuth();
 
   const [loading, setLoading] = useState(true);
@@ -21,48 +24,67 @@ export default function Professors({ navigation }: Props) {
   const [users, setUsers] = useState<User[]>([]);
 
   const sections = useMemo(
-    () => [{ title: 'Usuários', data: users }],
+    () => [
+      { 
+        title: 'Professores', 
+        data: users 
+      }
+    ],
     [users]
   );
 
   useEffect(() => {
-    carregarUsuarios
+    carregarProfessores();
   }, []);
 
-  const carregarUsuarios = async () => {
+  const carregarProfessores = async () => {
     setLoading(true);
-    const data = await obterUsuarios(token);
+    const data = await obterUsuariosPorFuncao(token, 'professor');
     if (data.length > 0) setUsers(data);
     setLoading(false);
   };
 
   const handleRefresh = async () => {
     setRefreshing(true);
-    await carregarUsuarios();
+    await carregarProfessores();
     setRefreshing(false);
   };
+
+  const handleEditUser = (id: number) => {
+    navigation.navigate('Editar Usuário', { id });
+  };
+
+  const handleDeleteUser = async (id: number) => {
+    await excluirUsuario(token, id);
+    carregarProfessores(); 
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      carregarProfessores();
+    }, [])
+  );
 
   if (loading) {
     return <Loading />;
   }
 
   if (!users.length) {
-    return (
-      <NotFound>
-        Nenhum professor encontrado
-      </NotFound>
-    );
+    return <NotFound>Nenhum professor encontrado</NotFound>;
   }
 
   return (
     <LinearGradient style={styles.container} colors={["#433878", "#7E60BF"]}>
       <SectionList
         sections={sections}
-        keyExtractor={(item) => '' + item.id!}
+        keyExtractor={(item) => '' + item.id}
         renderItem={({ item }) => (
           <UserCard
-            {...item}
-            onPress={() => navigation.navigate('Usuário', { id: item.id! })}
+            id={item.id}
+            username={item.username}
+            role={item.role}
+            onEdit={handleEditUser}
+            onDelete={handleDeleteUser}
           />
         )}
         renderSectionHeader={({ section: { title } }) => (
@@ -75,7 +97,8 @@ export default function Professors({ navigation }: Props) {
 
       <TouchableOpacity 
         style={styles.fab} 
-        onPress={() => navigation.navigate("Adicionar Professor")} 
+        onPress={() => navigation.navigate("Criar Usuário", "professor")}
+
       >
         <Ionicons name="add" size={30} color="white" />
         <Text style={styles.fabText}>Adicionar Professor</Text>

@@ -40,7 +40,7 @@ export const obterUsuariosPorFuncao = async (
   try {
     console.log("Função: ", role);
 
-    const response = await fetch(`${BASE_URL}/users/${role}`, {
+    const response = await fetch(`${BASE_URL}/users?role=${role}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -99,21 +99,20 @@ export const atualizarUsuario = async (
   try {
     console.log('Atualizando usuário... ', username);
     const response = await fetch(`${BASE_URL}/users/${id}`, {
-      method: 'PATCH',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({ role, username, password  })
     });
-
     if (!response.ok) {
       throw new Error('Erro ao atualizar usuário.');
     }
 
-    const data = await response.json();
-    console.log('Usuário atualizado com sucesso!', data);
-    return data;
+    // const data = await response.json();
+    console.log('Usuário atualizado com sucesso!');
+    return true;
   } catch (error) {
     console.log(error);
     return null;

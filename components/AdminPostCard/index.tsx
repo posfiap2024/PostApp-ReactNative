@@ -28,8 +28,6 @@ const AdminPostCard = ({ post, navigation, carregarPosts }: AdminPostCardProps) 
     try {
       const atualizaPost = await atualizarPost(token, post.id, { "status": "published" });
 
-      console.log(atualizaPost);
-
       if (atualizaPost) {
         carregarPosts();
       }
