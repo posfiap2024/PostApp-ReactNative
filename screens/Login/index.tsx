@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, TextInput, Button, StyleSheet,Text,TouchableOpacity, StatusBar, Modal, Pressable,} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
-import { AuthProvider, useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { Ionicons } from '@expo/vector-icons'; // Biblioteca de ícones
 
 export default function Login() {
@@ -12,12 +12,12 @@ export default function Login() {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const navigation = useNavigation();
 
-  const { token, user, login, logout } = useAuth();
+  const { login } = useAuth();
 
   const handleButtonPress = async () => {
-    await login(screenUser, password);
-    
-    if (token) {
+    const tokenRetornado = await login(screenUser, password);
+
+    if (tokenRetornado) {
       navigation.goBack();
     } else {
       setShowErrorModal(true);
@@ -38,7 +38,7 @@ export default function Login() {
           placeholder="Digite seu usuário"
           placeholderTextColor="#888"
           onChangeText={(inputText) => setScreenUser(inputText)}
-          value={user}
+          value={screenUser}
         />
         <Text style={styles.label}>Senha</Text>
         <TextInput
@@ -49,7 +49,9 @@ export default function Login() {
           onChangeText={(inputText) => setPassword(inputText)}
           value={password}
         />
-        <Button title="Login" onPress={handleButtonPress} />
+        <TouchableOpacity style={styles.submitButton} onPress={handleButtonPress}>
+          <Text style={styles.submitButtonText}>Login</Text>
+        </TouchableOpacity>
       </View>
       <Modal
         visible={showErrorModal}
@@ -144,5 +146,17 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: "#FFF",
     fontWeight: "bold",
+  },
+  submitButton: {
+    backgroundColor: "#433878",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  submitButtonText: {
+    color: "#FFF",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });
