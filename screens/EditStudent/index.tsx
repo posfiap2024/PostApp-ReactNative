@@ -16,7 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 type Props = DrawerScreenProps<RootStackParamList, any>;
 
 export default function StudentList({ navigation }: Props) {
-
+    const role = 'student'
     const { token, user } = useAuth();
 
     useEffect(() => {
@@ -36,7 +36,7 @@ export default function StudentList({ navigation }: Props) {
   ]), [users])
 
   useEffect(() => {
-    obterUsuarios(token).then((data) => {
+    obterUsuarios(token, role).then((data) => {
       if (data.length > 0) {
         setUsers(data)
       }

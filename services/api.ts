@@ -1,13 +1,13 @@
-const BASE_URL = 'http://192.168.0.167:3001';
+const BASE_URL = 'http://192.168.0.169:3001';
 // const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 
-export const obterUsuarios = async (token: any) => {
+export const obterUsuarios = async (token:any, role: string) => {
   try {
     console.log('Obtendo usuários... ');
     console.log('Token: ', token);
 
-    const response = await fetch(`${BASE_URL}/users`, {
+    const response = await fetch(`${BASE_URL}/users?role=${role}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
