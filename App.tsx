@@ -12,12 +12,11 @@ import Students from './screens/Students';
 import CreatePost from './screens/CreatePost';
 import EditPost from './screens/EditPost';
 import Login from './screens/Login';
-import CreateProfessor from './screens/CreateProfessor';
 import CreateStudent from './screens/CreateStudent';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Post from './screens/Post';
-import ProfessorList from './screens/EditProfessor';
-import UserPage from './screens/UserPage';
+import CreateUser from './screens/CreateUser';
+import EditUser from './screens/EditUser';
 import { useEffect, useState } from 'react';
 
 export type RootStackParamList = {
@@ -96,13 +95,12 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="Post" component={Post} />
-          <Stack.Screen name="Criar Postagem" component={CreatePost}  options={{ headerShown: false }}/>
-          <Stack.Screen name="Editar Postagem" component={EditPost}  options={{ headerShown: false }}/>
+          <Stack.Screen name="Criar Postagem" component={CreatePost}  options={{ headerShown: false }} />
+          <Stack.Screen name="Editar Postagem" component={EditPost}  options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={Login}  options={{ headerShown: false }}/>
           <Stack.Screen name="Criar Estudante" component={CreateStudent} />
-          <Stack.Screen name="Criar Professor" component={CreateProfessor} />
-          <Stack.Screen name="Lista de Professores" component={ProfessorList} />
-          <Stack.Screen name="Usuário" component={UserPage} />
+          <Stack.Screen name="Criar Usuário" component={CreateUser} options={{ headerShown: false }} />
+          <Stack.Screen name="Editar Usuário" component={EditUser} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

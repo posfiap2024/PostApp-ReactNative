@@ -43,8 +43,6 @@ export const AuthProvider = ({ children }) => {
       setToken(_token);
       setUser(decodedUser);
     }
-    console.log("Auth Context token: ", token);
-    console.log("Auth Context _token: ", _token);
     return token;
   };
 
