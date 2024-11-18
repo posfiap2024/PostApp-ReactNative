@@ -1,10 +1,8 @@
 import './gesture-handler';
 
-import { Text, TouchableOpacity, View } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { Appbar } from 'react-native-paper';
 import PostList from './screens/PostList';
 import Admin from './screens/Admin';
 import Professors from './screens/Professors';
@@ -18,6 +16,7 @@ import Post from './screens/Post';
 import CreateUser from './screens/CreateUser';
 import EditUser from './screens/EditUser';
 import { useEffect, useState } from 'react';
+import CustomAppBar from './components/CustomAppBar';
 
 export type RootStackParamList = {
   Drawer: undefined;
@@ -30,26 +29,6 @@ export type RootStackParamList = {
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
-
-const CustomAppBar = ({ navigation }: any) => { 
-  const { logout, user } = useAuth();
-
-  return ( 
-  <Appbar.Header style={styles.header}> 
-    <Appbar.Action icon="menu" color="white" onPress={() => navigation.toggleDrawer()} /> 
-    <Appbar.Content title="Postagens Escolares" titleStyle={styles.title} /> 
-    
-  {user ? ( 
-    <TouchableOpacity style={styles.actionButton} onPress={logout}> 
-      <Text style={styles.actionText}>Sair</Text> 
-    </TouchableOpacity> 
-  ) : ( 
-    <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Login')}> 
-      <Text style={styles.actionText}>Login</Text> 
-    </TouchableOpacity> 
-  )}
-  </Appbar.Header> ); 
-};
 
 const DrawerNavigator = () => {  
   const { user } = useAuth();
@@ -116,10 +95,3 @@ export default function App() {
     </AuthProvider>
   );
 }
-
-const styles = { 
-  header: { backgroundColor: '#433878', }, 
-  title: { color: 'white', }, 
-  actionButton: { flexDirection: 'row', alignItems: 'center', marginRight: 10, }, 
-  actionText: { color: 'white', marginLeft: 5, fontWeight: 'bold', }, 
-};
