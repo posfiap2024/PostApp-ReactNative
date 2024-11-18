@@ -16,9 +16,6 @@ export default function Login() {
 
   const handleButtonPress = async () => {
     await login(screenUser, password);
-    console.log("Login page token: ", token);
-    console.log("Login page authToken: ", token);
-    console.log("Login page authUser: ", user);
     
     if (token) {
       navigation.goBack();
