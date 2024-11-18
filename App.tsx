@@ -32,14 +32,13 @@ export type RootStackParamList = {
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
 
-const CustomAppBar = ({ navigation }: any) => {
-  return (
-    <Appbar.Header>
-      <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
-      <Appbar.Content title="Aplicativo de Postagens Escolares" />
-      <Appbar.Action icon="login" onPress={() => navigation.navigate('Login')} />
-    </Appbar.Header>
-  );
+const CustomAppBar = ({ navigation }: any) => { 
+  return ( 
+  <Appbar.Header style={styles.header}> 
+    <Appbar.Action icon="menu" color="white" onPress={() => navigation.toggleDrawer()} /> 
+    <Appbar.Content title="Postagens Escolares" titleStyle={styles.title} /> 
+    <Appbar.Action icon="login" color="white" onPress={() => navigation.navigate('Login')} /> 
+  </Appbar.Header> ); 
 };
 
 const DrawerNavigator = () => (
@@ -67,10 +66,10 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="Post" component={Post} />
-          <Stack.Screen name="Criar Postagem" component={CreatePost} />
-          <Stack.Screen name="Editar Postagem" component={EditPost} />
-          <Stack.Screen name="Login" component={Login}/>
-          <Stack.Screen name="Criar Aluno" component={CreateStudent} />
+          <Stack.Screen name="Criar Postagem" component={CreatePost}  options={{ headerShown: false }}/>
+          <Stack.Screen name="Editar Postagem" component={EditPost}  options={{ headerShown: false }}/>
+          <Stack.Screen name="Login" component={Login}  options={{ headerShown: false }}/>
+          <Stack.Screen name="Criar Estudante" component={CreateStudent} />
           <Stack.Screen name="Criar Professor" component={CreateProfessor} />
           <Stack.Screen name="Lista de Professores" component={ProfessorList} />
           <Stack.Screen name="Lista de Alunos" component={StudentList} />
@@ -80,3 +79,5 @@ export default function App() {
     </AuthProvider>
   );
 }
+
+const styles = { header: { backgroundColor: '#433878', }, title: { color: 'white', } };
