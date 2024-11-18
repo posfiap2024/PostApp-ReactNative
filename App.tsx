@@ -69,7 +69,7 @@ export default function App() {
           <Stack.Screen name="Criar Postagem" component={CreatePost}  options={{ headerShown: false }}/>
           <Stack.Screen name="Editar Postagem" component={EditPost}  options={{ headerShown: false }}/>
           <Stack.Screen name="Login" component={Login}  options={{ headerShown: false }}/>
-          <Stack.Screen name="Criar Estudante" component={CreateStudent} />
+          <Stack.Screen name="Criar Aluno" component={CreateStudent} />
           <Stack.Screen name="Criar Professor" component={CreateProfessor} />
           <Stack.Screen name="Lista de Professores" component={ProfessorList} />
           <Stack.Screen name="Lista de Alunos" component={StudentList} />
