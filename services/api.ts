@@ -8,36 +8,7 @@ export const obterUsuarios = async (token:any, role: string) => {
     console.log('Token: ', token);
 
     const response = await fetch(`${BASE_URL}/users?role=${role}`, {
-      
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-    });
-    
-    if (!response.ok) {
-      throw new Error('Erro ao obter usuários: ' + response);
-    }
-    
-    const data = await response.json();
-    console.log('Dados: ' + data)
-    console.log('Usuários obtidos com sucesso!', data);
-    return data;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
 
-export const obterUsuariosPorFuncao = async (
-  token: any,
-  role: string, 
-) => {
-  try {
-    console.log("Função: ", role);
-
-    const response = await fetch(`${BASE_URL}/users?role=${role}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
