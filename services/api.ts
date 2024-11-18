@@ -8,6 +8,65 @@ export const obterUsuarios = async (token:any, role: string) => {
     console.log('Token: ', token);
 
     const response = await fetch(`${BASE_URL}/users?role=${role}`, {
+      
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error('Erro ao obter usuários: ' + response);
+    }
+    
+    const data = await response.json();
+    console.log('Dados: ' + data)
+    console.log('Usuários obtidos com sucesso!', data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const obterUsuariosPorFuncao = async (
+  token: any,
+  role: string, 
+) => {
+  try {
+    console.log("Função: ", role);
+
+    const response = await fetch(`${BASE_URL}/users?role=${role}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error('Erro ao obter usuários: ' + response);
+    }
+    
+    const data = await response.json();
+    console.log('Dados: ' + data)
+    console.log('Usuários obtidos com sucesso!', data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const obterUsuariosPorFuncao = async (
+  token: any,
+  role: string, 
+) => {
+  try {
+    console.log("Função: ", role);
+
+    const response = await fetch(`${BASE_URL}/users?role=${role}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -58,28 +117,28 @@ export const obterUsuarioPorId = async (
 
 export const atualizarUsuario = async (
   token: any,
-  title: any,
-  content: any,
-  status: any
+  id: number,
+  username: string,
+  password: string,
+  role: string
 ) => {
   try {
-    console.log('Criando post... ', title);
-    const response = await fetch(`${BASE_URL}/posts`, {
-      method: 'POST',
+    console.log('Atualizando usuário... ', username);
+    const response = await fetch(`${BASE_URL}/users/${id}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({ title, content, status })
+      body: JSON.stringify({ role, username, password  })
     });
-
     if (!response.ok) {
-      throw new Error('Erro ao criar o post');
+      throw new Error('Erro ao atualizar usuário.');
     }
 
-    const data = await response.json();
-    console.log('Post criado com sucesso!', data);
-    return data;
+    // const data = await response.json();
+    console.log('Usuário atualizado com sucesso!');
+    return true;
   } catch (error) {
     console.log(error);
     return null;
@@ -119,27 +178,24 @@ export const criarUsuario = async (
 
 export const excluirUsuario = async (
   token: any,
-  title: any,
-  content: any,
-  status: any
+  id: number,
 ) => {
   try {
-    console.log('Criando post... ', title);
-    const response = await fetch(`${BASE_URL}/posts`, {
-      method: 'POST',
+    console.log('Excluindo usuário... ', id);
+    const response = await fetch(`${BASE_URL}/users/${id}`, {
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({ title, content, status })
     });
 
     if (!response.ok) {
-      throw new Error('Erro ao criar o post');
+      throw new Error('Erro ao excluir usuário.');
     }
 
     const data = await response.json();
-    console.log('Post criado com sucesso!', data);
+    console.log('Usuário excluído com sucesso!', data);
     return data;
   } catch (error) {
     console.log(error);
