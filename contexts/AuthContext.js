@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
       setToken(_token);
       setUser(decodedUser);
     }
-    return token;
+    return _token;
   };
 
   const logout = () => {

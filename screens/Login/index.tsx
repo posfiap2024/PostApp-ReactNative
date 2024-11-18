@@ -12,12 +12,12 @@ export default function Login() {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const navigation = useNavigation();
 
-  const { token, user, login, logout } = useAuth();
+  const { login } = useAuth();
 
   const handleButtonPress = async () => {
-    await login(screenUser, password);
-    
-    if (token) {
+    const tokenRetornado = await login(screenUser, password);
+
+    if (tokenRetornado) {
       navigation.goBack();
     } else {
       setShowErrorModal(true);
@@ -38,7 +38,7 @@ export default function Login() {
           placeholder="Digite seu usuário"
           placeholderTextColor="#888"
           onChangeText={(inputText) => setScreenUser(inputText)}
-          value={user}
+          value={screenUser}
         />
         <Text style={styles.label}>Senha</Text>
         <TextInput
