@@ -3,7 +3,7 @@ import { Picker } from '@react-native-picker/picker'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { obterUsuarioPorId, atualizarUsuario } from '../../services/api';  // Assumindo que esses métodos estão implementados
+import { obterUsuarioPorId, atualizarUsuario } from '../../services/users';  // Assumindo que esses métodos estão implementados
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -41,8 +41,8 @@ const EditUser = () => {
 
     if (token) {
       const sucesso = await atualizarUsuario(
-        token, 
-        id, 
+        token,
+        id,
         username,
         password,
         role,
@@ -84,7 +84,7 @@ const EditUser = () => {
           value={username}
           onChangeText={setUsername}
         />
-        
+
         <TextInput
           style={styles.input}
           placeholder="Senha"
@@ -93,7 +93,7 @@ const EditUser = () => {
           value={password}
           onChangeText={setPassword}
         />
-        
+
         <TextInput
           style={styles.input}
           placeholder="Confirmar Senha"
@@ -102,14 +102,14 @@ const EditUser = () => {
           value={confirmPassword}
           onChangeText={setConfirmPassword}
         />
-        
+
         {error ? <Text style={styles.error}>{error}</Text> : null}
-        
+
         <TouchableOpacity style={styles.submitButton} onPress={handleUpdateUser}>
           <Text style={styles.submitButtonText}>Atualizar Usuário</Text>
         </TouchableOpacity>
       </View>
-      <StatusBar style="auto" />
+      <StatusBar barStyle="default" />
     </LinearGradient>
   );
 };

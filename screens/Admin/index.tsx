@@ -3,7 +3,7 @@ import { Text, SectionList, StyleSheet, ActivityIndicator, View, TouchableOpacit
 import { LinearGradient } from 'expo-linear-gradient';
 import { useAuth } from "../../contexts/AuthContext";
 import { NavigationProp, useFocusEffect } from "@react-navigation/native";
-import { obterPostsAdmin } from "../../services/api";
+import { obterPostsAdmin } from "../../services/posts";
 import { Ionicons } from '@expo/vector-icons';
 import AdminPostCard from "../../components/AdminPostCard";
 
@@ -59,11 +59,11 @@ export default function Admin({ navigation }: Props) {
     }, [])
   );
 
-  if (loading) { 
-    return ( 
+  if (loading) {
+    return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#0000ff" /> 
-      </View> 
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
     );
   }
 
@@ -71,7 +71,7 @@ export default function Admin({ navigation }: Props) {
     <LinearGradient style={styles.lista} colors={["#433878", "#7E60BF"]}>
       {/* Título e Botão Criar Postagem */}
       {/* <Text style={styles.title}>Painel Administrativo</Text>
-      
+
       <TouchableOpacity style={styles.createButtonContainer} onPress={() => navigation.navigate("Criar Postagem")}>
         <LinearGradient
           colors={['#7E60BF', '#433878']}
@@ -96,33 +96,33 @@ export default function Admin({ navigation }: Props) {
         }
       />
 
-      <TouchableOpacity 
-        style={styles.fab} 
-        onPress={() => navigation.navigate("Criar Postagem")} > 
-          <Ionicons name="add" size={30} color="white" /> 
-          <Text style={styles.fabText}>Adicionar Post</Text> 
+      <TouchableOpacity
+        style={styles.fab}
+        onPress={() => navigation.navigate("Criar Postagem")} >
+          <Ionicons name="add" size={30} color="white" />
+          <Text style={styles.fabText}>Adicionar Post</Text>
       </TouchableOpacity>
     </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  fab: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    position: 'absolute', 
-    right: 16, 
-    bottom: 16, 
-    backgroundColor: '#E6A569', 
-    borderRadius: 30, 
-    padding: 16, 
-    elevation: 5, 
-  }, 
-  fabText: { 
-    color: 'white', 
-    marginLeft: 8, 
-    fontSize: 18, 
+  fab: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 16,
+    bottom: 16,
+    backgroundColor: '#E6A569',
+    borderRadius: 30,
+    padding: 16,
+    elevation: 5,
+  },
+  fabText: {
+    color: 'white',
+    marginLeft: 8,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   lista: {
@@ -137,10 +137,10 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 8,
   },
-  loadingContainer: { 
-    flex: 1, 
-    justifyContent: "center", 
-    alignItems: "center", 
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   createButtonContainer: {
     marginHorizontal: 16,

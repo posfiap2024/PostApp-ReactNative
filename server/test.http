@@ -1,0 +1,96 @@
+###
+# @name login
+POST http://localhost:3001/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "123456"
+}
+
+###
+GET http://localhost:3001/users
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+###
+GET http://localhost:3001/users?role=professor
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+
+###
+GET http://localhost:3001/users/4
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+
+###
+# @name createUser
+POST http://localhost:3001/users
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+  "username": "johndoe123456",
+  "password": "12345678",
+  "role": "professor"
+}
+
+###
+PATCH  http://localhost:3001/users/4
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+  "username": "johndoe1235555566",
+  "password": "123456"
+}
+
+
+###
+
+GET http://localhost:3001/posts
+Content-Type: application/json
+
+###
+
+GET http://localhost:3001/posts/search?q=inventore
+Content-Type: application/json
+
+###
+
+GET http://localhost:3001/posts/admin
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+###
+# @name createPost
+POST http://localhost:3001/posts
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+  "title": "qualquer coisa 4",
+  "content": "lorem ipsum"
+}
+
+###
+@id = {{ createPost.response.body.id }}
+GET http://localhost:3001/posts/{{ id }}
+Content-Type: application/json
+
+###
+@id = {{ createPost.response.body.id }}
+PATCH http://localhost:3001/posts/{{ id }}
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+  "status": "published"
+}
+
+###
+@id = {{ createPost.response.body.id }}
+DELETE http://localhost:3001/posts/{{ id }}
+Content-Type: application/json

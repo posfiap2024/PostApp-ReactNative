@@ -1,0 +1,61 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: postapp
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - private
+
+  backend:
+    build:
+      context: .
+    command: npm run start:dev
+    environment:
+      - DATABASE_HOST=postgres
+      - PORT=3001
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=postapp
+      - JWT_SECRET=secret
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - public
+      - private
+    depends_on:
+      - postgres
+
+  # frontend:
+  #   build:
+  #     context: ./postappfront.js
+  #   environment:
+  #     - PORT=3000
+  #     - REACT_APP_BASE_URL=http://localhost:3001
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - backend
+  #   volumes:
+  #     - ./postappfront.js:/usr/src/app
+  #     - /usr/src/app/node_modules
+  #   networks:
+  #     - public
+
+networks:
+  public:
+  private:
+
+volumes:
+  pgdata:
+
