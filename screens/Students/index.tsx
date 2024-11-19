@@ -1,54 +1,141 @@
-import React, { useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { NavigationProp } from "@react-navigation/native";
+import React, { useEffect, useMemo, useState } from "react";
+import { StyleSheet, Text, View, SectionList, RefreshControl, TouchableOpacity } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
+import { NavigationProp, useFocusEffect } from "@react-navigation/native";
 import { useAuth } from "../../contexts/AuthContext";
+import { excluirUsuario, obterUsuariosPorFuncao } from "../../services/api";
+import { UserCard } from "../../components/UserCard";
+import { Loading } from "../../components/Loading";
+import { NotFound } from "../../components/NotFound";
+import { Ionicons } from '@expo/vector-icons';
+import { User } from "../../types/User";
 
 type Props = {
   navigation: NavigationProp<any>;
 };
 
-export default function Students({ navigation }: Props) {
-  const { token, user } = useAuth();
+export default function Alunos({ navigation }: Props) {
+
   
+  const { token } = useAuth();
+
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [users, setUsers] = useState<User[]>([]);
+
+  const sections = useMemo(
+    () => [
+      { 
+        title: 'Alunos', 
+        data: users 
+      }
+    ],
+    [users]
+  );
+
   useEffect(() => {
-    console.log('TOKEN: ', token);
-    console.log('USER: ', user);
-  }, [token]);
+    carregarAlunos();
+  }, []);
+
+  const carregarAlunos = async () => {
+    setLoading(true);
+    const data = await obterUsuariosPorFuncao(token, 'student');
+    if (data.length > 0) setUsers(data);
+    setLoading(false);
+  };
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await carregarAlunos();
+    setRefreshing(false);
+  };
+
+  const handleEditUser = (id: number) => {
+    navigation.navigate('Editar Usuário', { id });
+  };
+
+  const handleDeleteUser = async (id: number) => {
+    await excluirUsuario(token, id);
+    carregarAlunos(); 
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      carregarAlunos();
+    }, [])
+  );
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (!users.length) {
+    return <NotFound>Nenhum aluno encontrado</NotFound>;
+  }
 
   return (
-    <View style={styles.container}>
+    <LinearGradient style={styles.container} colors={["#433878", "#7E60BF"]}>
+      <SectionList
+        sections={sections}
+        keyExtractor={(item) => '' + item.id}
+        renderItem={({ item }) => (
+          <UserCard
+            id={item.id}
+            username={item.username}
+            role={item.role}
+            onEdit={handleEditUser}
+            onDelete={handleDeleteUser}
+          />
+        )}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text style={styles.title}>{title}</Text>
+        )}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        }
+      />
+
       <TouchableOpacity 
-        style={styles.button} 
-        onPress={() => navigation.navigate('Criar Aluno')}
+        style={styles.fab} 
+        onPress={() => navigation.navigate("Criar Usuário", "Aluno")}
+
       >
-        <Text style={styles.buttonText}>Criar aluno</Text>
+        <Ionicons name="add" size={30} color="white" />
+        <Text style={styles.fabText}>Adicionar Aluno</Text>
       </TouchableOpacity>
-      <TouchableOpacity 
-        style={styles.button} 
-        onPress={() => navigation.navigate('Lista de Alunos')}
-      >
-        <Text style={styles.buttonText}>Lista de Alunos</Text>
-      </TouchableOpacity>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#FFF",
   },
-  button: {
-    width: '80%',
-    padding: 15,
-    backgroundColor: '#0056b3',
-    borderRadius: 5,
-    marginVertical: 10,
-    alignItems: 'center',
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#FFF",
+    marginHorizontal: 16,
+    marginTop: 16,
+    marginBottom: 8,
   },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
+  fab: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    position: 'absolute', 
+    right: 16, 
+    bottom: 16, 
+    backgroundColor: '#E6A569', 
+    borderRadius: 30, 
+    padding: 16, 
+    elevation: 5, 
+  }, 
+  fabText: { 
+    color: 'white', 
+    marginLeft: 8, 
+    fontSize: 18, 
+    fontWeight: 'bold',
   },
 });
