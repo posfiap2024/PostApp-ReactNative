@@ -97,7 +97,7 @@ export default function Alunos({ navigation }: Props) {
 
       <TouchableOpacity 
         style={styles.fab} 
-        onPress={() => navigation.navigate("Criar Usuário", "Aluno")}
+        onPress={() => navigation.navigate("Criar Usuário", "student")}
 
       >
         <Ionicons name="add" size={30} color="white" />

@@ -6,6 +6,12 @@ import { useAuth } from '../../contexts/AuthContext';
 import { criarUsuario } from '../../services/api';
 import { Ionicons } from '@expo/vector-icons';
 
+const rolePtBr = {
+  student: 'estudante',
+  professor: 'professor',
+  admin: 'administrador',
+};
+
 const CreateUser = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -49,7 +55,7 @@ const CreateUser = () => {
       <View style={styles.modal}>
         <Text style={styles.title}>Criação de Usuário</Text>
         
-        <Text style={styles.readOnlyField}>Função: {role}</Text>
+        <Text style={styles.readOnlyField}>Função: {rolePtBr[role] || role}</Text>
 
         <TextInput
           style={styles.input}
