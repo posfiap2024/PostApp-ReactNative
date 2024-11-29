@@ -1,13 +1,14 @@
 import { StyleSheet, Text, View, SectionList, RefreshControl } from "react-native";
 import { DrawerScreenProps } from "@react-navigation/drawer";
 import { PostCard } from "../../components/PostCard";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { obterPosts } from "../../services/api";
+import { useCallback, useMemo, useState } from "react";
+import { obterPosts } from "../../services/posts";
 import { RootStackParamList } from "../../App";
 import { Loading } from "../../components/Loading";
 import { NotFound } from "../../components/NotFound";
 import { Post } from "../../types/Post";
 import { useFocusEffect } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
 
 type Props = DrawerScreenProps<RootStackParamList, any>;
 
@@ -62,28 +63,39 @@ export default function PostList({ navigation }: Props) {
   }
 
   return (
-    <SectionList
-      sections={sections}
-      keyExtractor={(item) => "" + item.id!}
-      renderItem={({ item }) => (
-        <PostCard
-          {...item}
-          onPress={() => navigation.navigate("Post", { id: item.id! })}
-        />
-      )}
-      renderSectionHeader={({ section: { title } }) => (
-        <Text style={styles.title}>{title}</Text>
-      )}
-      // Configuração para atualização ao arrastar para baixo
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-      }
-    />
+    <LinearGradient
+      style={styles.container}
+      colors={["#433878", "#7E60BF"]}
+    >
+      <SectionList
+        sections={sections}
+        keyExtractor={(item) => "" + item.id!}
+        renderItem={({ item }) => (
+          <PostCard
+            {...item}
+            onPress={() => navigation.navigate("Post", { id: item.id! })}
+          />
+        )}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text style={styles.title}>{title}</Text>
+        )}
+        // Configuração para atualização ao arrastar para baixo
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        }
+      />
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+  },
   title: {
+    color: "#ffffff",
     fontSize: 24,
     fontWeight: "bold",
     marginHorizontal: 16,

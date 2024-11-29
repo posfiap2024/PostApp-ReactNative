@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable } from 'reac
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationProp } from '@react-navigation/native';
 import { useAuth } from '../../contexts/AuthContext';
-import { atualizarPost, excluirPost } from '../../services/api';
+import { atualizarPost, excluirPost } from '../../services/posts';
 
 type AdminPostCardProps = {
   navigation: NavigationProp<any>;

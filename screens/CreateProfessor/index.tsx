@@ -3,8 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar }
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from '../../contexts/AuthContext';
-import { criarPost, criarUsuario } from '../../services/api';
-import { Ionicons } from '@expo/vector-icons';
+import { criarUsuario } from '../../services/users';
 
 const CreateProfessor = () => {
   const role = 'professor';
@@ -70,7 +69,7 @@ const CreateProfessor = () => {
           <Text style={styles.submitButtonText}>Criar Professor</Text>
         </TouchableOpacity>
       </View>
-      <StatusBar style="auto" />
+      <StatusBar barStyle="default" />
     </LinearGradient>
   );
 };

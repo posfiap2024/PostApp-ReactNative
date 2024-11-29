@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useAuth } from '../../contexts/AuthContext';
-import { criarUsuario } from '../../services/api';
+import { criarUsuario } from '../../services/users';
 import { Ionicons } from '@expo/vector-icons';
-import { DrawerScreenProps } from '@react-navigation/drawer';
-import { RootStackParamList } from '../../App';
 import { Picker } from '@react-native-picker/picker';
 
 const CreateUser = () => {
@@ -25,7 +23,7 @@ const CreateUser = () => {
       setError('As senhas não coincidem');
       return;
     }
-    
+
     if (token) {
       const novoUsuario = await criarUsuario(token, role, username, password);
       if (novoUsuario) {
@@ -51,7 +49,7 @@ const CreateUser = () => {
       </TouchableOpacity>
       <View style={styles.modal}>
         <Text style={styles.title}>Criação de Usuário</Text>
-        
+
         <Text style={styles.label}>Função</Text>
         <Picker
           selectedValue={role}
@@ -70,7 +68,7 @@ const CreateUser = () => {
           value={username}
           onChangeText={setUsername}
         />
-        
+
         <TextInput
           style={styles.input}
           placeholder="Senha"
@@ -82,7 +80,7 @@ const CreateUser = () => {
           }}
           secureTextEntry
         />
-        
+
         <TextInput
           style={styles.input}
           placeholder="Confirme a senha"
@@ -94,7 +92,7 @@ const CreateUser = () => {
           }}
           secureTextEntry
         />
-        
+
         {/* Exibe a mensagem de erro se as senhas não coincidirem */}
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
@@ -102,7 +100,7 @@ const CreateUser = () => {
           <Text style={styles.submitButtonText}>Criar Usuário</Text>
         </TouchableOpacity>
       </View>
-      <StatusBar style="auto" />
+      <StatusBar barStyle="default" />
     </LinearGradient>
   );
 };
