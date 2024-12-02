@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, StyleSheet,Text,TouchableOpacity, StatusBar, Modal, Pressable,} from "react-native";
+import { View, TextInput, StyleSheet,Text,TouchableOpacity, StatusBar, Modal, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../contexts/AuthContext";
 import { Ionicons } from '@expo/vector-icons'; // Biblioteca de ícones
 
 export default function Login() {
-  
   const [screenUser, setScreenUser] = useState("");
   const [password, setPassword] = useState("");
   const [showErrorModal, setShowErrorModal] = useState(false);
@@ -71,7 +70,7 @@ export default function Login() {
           </View>
         </View>
       </Modal>
-      <StatusBar style="auto" />
+      <StatusBar barStyle="default" />
     </LinearGradient>
   );
 }

@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar, 
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { obterPostPorId, atualizarPost } from '../../services/api';
+import { obterPostPorId, atualizarPost } from '../../services/posts';
 import { useAuth } from '../../contexts/AuthContext';
 
 const EditPost = () => {
@@ -15,11 +15,11 @@ const EditPost = () => {
   const [titulo, setTitulo] = useState('');
   const [conteudo, setConteudo] = useState('');
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const fadeAnim = new Animated.Value(0);  
+  const fadeAnim = new Animated.Value(0);
 
   const carregarDadosDoPost = async () => {
     try {
-      const post = await obterPostPorId(id, token);
+      const post = await obterPostPorId(id);
       setTitulo(post.title);
       setConteudo(post.content);
     } catch (error) {
@@ -35,7 +35,7 @@ const EditPost = () => {
     }).start();
 
     carregarDadosDoPost();
-  }, []); 
+  }, []);
 
   const handleUpdatePost = async () => {
     const sucesso = await atualizarPost(token, id, {
@@ -54,7 +54,7 @@ const EditPost = () => {
 
   const onRefresh = async () => {
     setIsRefreshing(true);
-    await carregarDadosDoPost(); 
+    await carregarDadosDoPost();
     setIsRefreshing(false);
   };
 
@@ -95,7 +95,7 @@ const EditPost = () => {
           </ScrollView>
         </Animated.View>
 
-        <StatusBar style="light" />
+        <StatusBar barStyle="light-content" />
       </LinearGradient>
     </KeyboardAvoidingView>
   );
@@ -168,14 +168,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 6,
     elevation: 10,
-    alignItems: 'center', 
+    alignItems: 'center',
     justifyContent: 'center',
   },
   submitButtonText: {
     color: "#FFF",
     fontWeight: "600",
     fontSize: 18,
-    textAlign: 'center', 
+    textAlign: 'center',
   },
   scrollView: {
     width: '100%',

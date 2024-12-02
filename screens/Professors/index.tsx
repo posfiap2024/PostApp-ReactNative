@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, SectionList, RefreshControl, TouchableOpacity }
 import { LinearGradient } from 'expo-linear-gradient';
 import { NavigationProp, useFocusEffect } from "@react-navigation/native";
 import { useAuth } from "../../contexts/AuthContext";
-import { excluirUsuario, obterUsuariosPorFuncao } from "../../services/api";
+import { excluirUsuario, obterUsuariosPorFuncao } from "../../services/users";
 import { UserCard } from "../../components/UserCard";
 import { Loading } from "../../components/Loading";
 import { NotFound } from "../../components/NotFound";
@@ -16,7 +16,7 @@ type Props = {
 
 export default function Professors({ navigation }: Props) {
 
-  
+
   const { token } = useAuth();
 
   const [loading, setLoading] = useState(true);
@@ -25,9 +25,9 @@ export default function Professors({ navigation }: Props) {
 
   const sections = useMemo(
     () => [
-      { 
-        title: 'Professores', 
-        data: users 
+      {
+        title: 'Professores',
+        data: users
       }
     ],
     [users]
@@ -56,7 +56,7 @@ export default function Professors({ navigation }: Props) {
 
   const handleDeleteUser = async (id: number) => {
     await excluirUsuario(token, id);
-    carregarProfessores(); 
+    carregarProfessores();
   };
 
   useFocusEffect(
@@ -80,7 +80,7 @@ export default function Professors({ navigation }: Props) {
         keyExtractor={(item) => '' + item.id}
         renderItem={({ item }) => (
           <UserCard
-            id={item.id}
+            id={item.id!}
             username={item.username}
             role={item.role}
             onEdit={handleEditUser}
@@ -95,8 +95,8 @@ export default function Professors({ navigation }: Props) {
         }
       />
 
-      <TouchableOpacity 
-        style={styles.fab} 
+      <TouchableOpacity
+        style={styles.fab}
         onPress={() => navigation.navigate("Criar Usuário", "professor")}
 
       >
@@ -120,22 +120,22 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 8,
   },
-  fab: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    position: 'absolute', 
-    right: 16, 
-    bottom: 16, 
-    backgroundColor: '#E6A569', 
-    borderRadius: 30, 
-    padding: 16, 
-    elevation: 5, 
-  }, 
-  fabText: { 
-    color: 'white', 
-    marginLeft: 8, 
-    fontSize: 18, 
+  fab: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 16,
+    bottom: 16,
+    backgroundColor: '#E6A569',
+    borderRadius: 30,
+    padding: 16,
+    elevation: 5,
+  },
+  fabText: {
+    color: 'white',
+    marginLeft: 8,
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });

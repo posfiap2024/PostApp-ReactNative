@@ -2,7 +2,7 @@ import { Text, ScrollView, StyleSheet } from "react-native";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from "../../App";
 import { useEffect, useState } from "react";
-import { obterPostPorId } from "../../services/api";
+import { obterPostPorId } from "../../services/posts";
 import { Loading } from "../../components/Loading";
 import type { Post } from "../../types/Post";
 import { NotFound } from "../../components/NotFound";

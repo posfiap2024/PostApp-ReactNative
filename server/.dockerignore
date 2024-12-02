@@ -1,0 +1,36 @@
+# Ignorar node_modules para não copiar para o contêiner
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar arquivos de configuração do ambiente local
+.env
+.env.local
+.env.*.local
+
+# Ignorar diretórios de teste
+__tests__/
+coverage/
+*.test.js
+
+# Ignorar diretórios de builds e dependências temporárias
+dist/
+build/
+.cache/
+
+# Ignorar arquivos de controle de versão
+.git
+.gitignore
+
+# Ignorar arquivos de IDEs ou editores
+.vscode/
+*.swp
+.idea/
+.DS_Store
+
+# Outras exclusões específicas da aplicação
+docker-compose.yml
+Dockerfile

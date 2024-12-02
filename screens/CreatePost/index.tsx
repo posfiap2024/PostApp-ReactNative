@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar, 
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from '../../contexts/AuthContext';
-import { criarPost } from '../../services/api';
+import { criarPost } from '../../services/posts';
 import { Ionicons } from '@expo/vector-icons';
 
 const CreatePost = () => {
@@ -41,7 +41,7 @@ const CreatePost = () => {
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={26} color="white" />
         </TouchableOpacity>
-        
+
         <Animated.View style={[styles.modal, { opacity: fadeAnim }]}>
           <Text style={styles.title}>Nova postagem</Text>
           <TextInput
@@ -64,8 +64,8 @@ const CreatePost = () => {
             <Text style={styles.submitButtonText}>Publicar</Text>
           </TouchableOpacity>
         </Animated.View>
-        
-        <StatusBar style="light" />
+
+        <StatusBar barStyle="light-content" />
       </LinearGradient>
     </KeyboardAvoidingView>
   );
