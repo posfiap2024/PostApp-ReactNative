@@ -17,6 +17,7 @@ import CreateUser from './screens/CreateUser';
 import EditUser from './screens/EditUser';
 import { useEffect, useState } from 'react';
 import CustomAppBar from './components/CustomAppBar';
+import StudentList from './screens/EditStudent';
 
 export type RootStackParamList = {
   Drawer: undefined;
@@ -87,6 +88,8 @@ export default function App() {
           <Stack.Screen name="Criar Postagem" component={CreatePost}  options={{ headerShown: false }} />
           <Stack.Screen name="Editar Postagem" component={EditPost}  options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={Login}  options={{ headerShown: false }}/>
+          <Stack.Screen name="Criar Aluno" component={CreateStudent} />
+          <Stack.Screen name="Lista de Alunos" component={StudentList} />
           <Stack.Screen name="Criar Estudante" component={CreateStudent} />
           <Stack.Screen name="Criar Usuário" component={CreateUser} options={{ headerShown: false }} />
           <Stack.Screen name="Editar Usuário" component={EditUser} options={{ headerShown: false }} />

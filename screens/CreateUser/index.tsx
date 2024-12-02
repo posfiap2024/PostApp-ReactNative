@@ -5,7 +5,12 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useAuth } from '../../contexts/AuthContext';
 import { criarUsuario } from '../../services/users';
 import { Ionicons } from '@expo/vector-icons';
-import { Picker } from '@react-native-picker/picker';
+
+const rolePtBr = {
+  student: 'estudante',
+  professor: 'professor',
+  admin: 'administrador',
+};
 
 const CreateUser = () => {
   const [username, setUsername] = useState('');
@@ -49,17 +54,8 @@ const CreateUser = () => {
       </TouchableOpacity>
       <View style={styles.modal}>
         <Text style={styles.title}>Criação de Usuário</Text>
-
-        <Text style={styles.label}>Função</Text>
-        <Picker
-          selectedValue={role}
-          style={styles.picker}
-          onValueChange={(itemValue) => setRole(itemValue)}
-        >
-          <Picker.Item label="Administrador" value="admin" />
-          <Picker.Item label="Professor" value="professor" />
-          <Picker.Item label="Estudante" value="student" />
-        </Picker>
+        
+        <Text style={styles.readOnlyField}>Função: {rolePtBr[role] || role}</Text>
 
         <TextInput
           style={styles.input}
@@ -145,6 +141,13 @@ const styles = StyleSheet.create({
   },
   readOnlyInput: {
     backgroundColor: "#E0E0E0",
+  },
+  readOnlyField: {
+    textAlign: "left", // Centraliza o texto horizontalmente
+    fontSize: 16, // Um tamanho de fonte confortável para leitura
+    color: "#6D6D6D", // Um cinza escuro para indicar que o campo é somente leitura
+    backgroundColor: "transparent", // Remove qualquer fundo
+    paddingVertical: 10, // Adiciona espaçamento vertical
   },
   errorText: {
     color: "red",

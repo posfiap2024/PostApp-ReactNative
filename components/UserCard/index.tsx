@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+const rolePtBr = {
+  student: 'estudante',
+  professor: 'professor',
+  admin: 'administrador',
+};
+
 type UserCardProps = {
   id: number;
   username: string;
@@ -22,7 +28,7 @@ export function UserCard({ id, username, role, onEdit, onDelete }: UserCardProps
     <View style={styles.card}>
       <View style={styles.cardContent}>
         <Text style={styles.cardTitle}>{username}</Text>
-        <Text style={[styles.cardDescription, styles.boldText]}>Função: {role}</Text>
+        <Text style={[styles.cardDescription, styles.boldText]}>Função: {rolePtBr[role] || role}</Text>
       </View>
       <View style={styles.cardActions}>
         <TouchableOpacity
