@@ -1,22 +1,22 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, StyleSheet,Text,TouchableOpacity, StatusBar, Modal, Pressable,} from "react-native";
+import { View, TextInput, StyleSheet,Text,TouchableOpacity, StatusBar, Modal, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../contexts/AuthContext";
 import { Ionicons } from '@expo/vector-icons'; // Biblioteca de ícones
 
 export default function Login() {
-  const [user, setUser] = useState("");
+  const [screenUser, setScreenUser] = useState("");
   const [password, setPassword] = useState("");
   const [showErrorModal, setShowErrorModal] = useState(false);
   const navigation = useNavigation();
 
-  const { login } = useAuth()
+  const { login } = useAuth();
 
   const handleButtonPress = async () => {
-    const token = await login(user, password);
-    
-    if (token) {
+    const tokenRetornado = await login(screenUser, password);
+
+    if (tokenRetornado) {
       navigation.goBack();
     } else {
       setShowErrorModal(true);
@@ -28,6 +28,7 @@ export default function Login() {
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <Ionicons name="arrow-back" size={24} color="white" />
       </TouchableOpacity>
+
       <View style={styles.modal}>
         <Text style={styles.title}>Post App</Text>
         <Text style={styles.label}>Usuário</Text>
@@ -35,8 +36,8 @@ export default function Login() {
           style={styles.input}
           placeholder="Digite seu usuário"
           placeholderTextColor="#888"
-          onChangeText={(inputText) => setUser(inputText)}
-          value={user}
+          onChangeText={(inputText) => setScreenUser(inputText)}
+          value={screenUser}
         />
         <Text style={styles.label}>Senha</Text>
         <TextInput
@@ -47,7 +48,9 @@ export default function Login() {
           onChangeText={(inputText) => setPassword(inputText)}
           value={password}
         />
-        <Button title="Login" onPress={handleButtonPress} />
+        <TouchableOpacity style={styles.submitButton} onPress={handleButtonPress}>
+          <Text style={styles.submitButtonText}>Login</Text>
+        </TouchableOpacity>
       </View>
       <Modal
         visible={showErrorModal}
@@ -67,7 +70,7 @@ export default function Login() {
           </View>
         </View>
       </Modal>
-      <StatusBar style="auto" />
+      <StatusBar barStyle="default" />
     </LinearGradient>
   );
 }
@@ -142,5 +145,17 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: "#FFF",
     fontWeight: "bold",
+  },
+  submitButton: {
+    backgroundColor: "#433878",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  submitButtonText: {
+    color: "#FFF",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });

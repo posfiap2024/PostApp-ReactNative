@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { logarUsuario, obterUsuario } from '../services/api';
+import { logarUsuario, obterUsuario } from '../services/users';
 
 const AuthContext = createContext();
 
@@ -37,13 +37,13 @@ export const AuthProvider = ({ children }) => {
   }, [user]);
 
   const login = async (username, password) => {
-    const token = await logarUsuario(username, password);
-    if (token) {
-      const decodedUser = await obterUsuario(token);
-      setToken(token);
+    const _token = await logarUsuario(username, password);
+    if (_token) {
+      const decodedUser = await obterUsuario(_token);
+      setToken(_token);
       setUser(decodedUser);
     }
-    return token;
+    return _token;
   };
 
   const logout = () => {
