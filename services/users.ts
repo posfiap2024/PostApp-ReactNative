@@ -95,7 +95,7 @@ export const atualizarUsuario = async (
   try {
     console.log('Atualizando usuário... ', username);
     const response = await api(`/users/${id}`, {
-      method: 'PUT',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`

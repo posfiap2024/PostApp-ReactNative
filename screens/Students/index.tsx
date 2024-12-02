@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, SectionList, RefreshControl, TouchableOpacity }
 import { LinearGradient } from 'expo-linear-gradient';
 import { NavigationProp, useFocusEffect } from "@react-navigation/native";
 import { useAuth } from "../../contexts/AuthContext";
-import { excluirUsuario, obterUsuariosPorFuncao } from "../../services/api";
+import { excluirUsuario, obterUsuariosPorFuncao } from "../../services/users";
 import { UserCard } from "../../components/UserCard";
 import { Loading } from "../../components/Loading";
 import { NotFound } from "../../components/NotFound";
