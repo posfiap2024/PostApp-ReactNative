@@ -8,7 +8,7 @@ gerenciar e interagir com postagens.
 
 ## 🌐 Demonstração do Projeto
 
-Link de demonstração: *(adicionar link aqui quando disponível)*
+Link de demonstração: *[Vídeo gravado](https://1drv.ms/v/c/a92349b78d645080/ETeAUUSj9SJFmHS16XBk_5EBsa9C4KJu-dftWeOwUy59eQ?e=P986ey)*
 
 ---
 
